@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/transparent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_suggest"
+                android:id="@+id/iv_type"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/head"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                fresco:placeholderImage="@drawable/ic_failload"
+                fresco:roundAsCircle="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp"
+                android:id="@+id/iv_sex"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_toRightOf="@id/head"
+                android:src="@drawable/ic_famale" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/iv_sex"
+                android:text="我叫小小鸟" />
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/name"
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="我是标题"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/title_size" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/head"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:maxLines="5"
+                android:text="你在干嘛" />
+
+            <com.thy.activecampus.view.NoScrollGridView
+                android:id="@+id/gridImgs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:layout_below="@id/content"
+                android:layout_marginLeft="1dp"
+                android:horizontalSpacing="1.5dp"
+                android:layout_marginRight="1dp"
+                android:numColumns="3"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="1.5dp">
+            </com.thy.activecampus.view.NoScrollGridView>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/gridImgs"
+                android:layout_marginTop="10dp">
+
+                <com.thy.activecampus.widget.DynamicTagFlowLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_toLeftOf="@id/publish"
+                    android:id="@+id/tags"
+                    android:layout_centerVertical="true"
+                    android:layout_height="match_parent">
+
+                </com.thy.activecampus.widget.DynamicTagFlowLayout>
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/pubTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dp"
+                    android:text="2 hour ago" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

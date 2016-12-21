@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="gray">#aaaaaa</color>
+    <color name="light_blue">#6593cb</color>
+    <color name="hintColor">@color/white</color>
+
+    <color name="themeNormal">#3f00ddff</color>
+    <color name="transport_black_bg">#55000000</color>
+  <!--动态细节fragemnt-->
+    <color name="window_background">#eeeeee</color>
+    <!-- API v21移行はandroid:colorPrimaryの値に使用 -->
+    <color name="colorPrimary">#FF99CC</color>
+<!--图片上传-->
+    <color name="colorTextPrimary">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#9E9E9E</color>
+    <color name="black">#000000</color>
+    <color name="black_alpha_50">#80000000</color>
+
+<!--聊天-->
+    <color name="base_shallow_black">#818181</color>
+    <color name="toolbar_spilt_line">#CDCDCD</color>
+    <color name="spilt_line">#CFCFCF</color>
+
+
+    <color name="exit_cur_account">#eb4f38</color>
+    <color name="exit_cur_account_press">#ec0929</color>
+
+
+    <color name="active">#11cd6e</color>
+    <color name="unactive">#a9b7b7</color>
+
+    <color name="item_footer">#ff8bc34a</color>
+
+    <color name="like">#FA4646</color>
+    <color name="unlike">#BEBEBE</color>
+
+</resources>

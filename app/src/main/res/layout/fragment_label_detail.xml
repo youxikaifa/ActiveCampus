@@ -1,0 +1,153 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:visibility="gone" />
+
+
+    <com.thy.activecampus.view.ObservableScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/space"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="none">
+
+        <FrameLayout
+            android:id="@+id/scroll_view_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false">
+
+            <!-- Header Imagery -->
+            <FrameLayout
+                android:id="@+id/header_image_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/headerVp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"></android.support.v4.view.ViewPager>
+
+            </FrameLayout>
+
+            <!-- Body 内容-->
+            <LinearLayout
+                android:id="@+id/body_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/window_background"
+                android:clipToPadding="false"
+                android:orientation="vertical">
+
+                <!-- TODO: Dummy View for scroll. remove this view.-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp">
+
+                    <TextView
+                        android:id="@+id/activeContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="777dp"
+                        android:layout_marginTop="15dp"
+                        android:text="相约1998"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <!-- Header bar -->
+            <FrameLayout
+                android:id="@+id/header_bar_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <!-- background 标题上部分的背景颜色-->
+                <!-- height assigned dynamically, and fill the ActionBar gaps. -->
+                <View
+                    android:id="@+id/header_bar_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:background="@color/colorPrimary">
+
+                </View>
+
+                <!-- contents 标题内容 -->
+                <RelativeLayout
+                    android:id="@+id/header_bar_contents"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:background="@color/colorPrimary"
+                    >
+                    <TextView
+                        android:id="@+id/authLabel"
+                        android:text="发布者"
+                        android:textColor="@color/white"
+                        android:background="@drawable/xml_rec_border_white"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginLeft="15dp"
+                        android:padding="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_toRightOf="@id/authLabel"
+                        android:id="@+id/authName"
+                        android:text="Jin"
+                        android:textColor="@color/white"
+                        android:background="@drawable/xml_authnam_bg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tv_join"
+                        android:layout_width="200dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:text="加入讨论"
+                        android:background="@drawable/xml_rec_solid_join"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp" />
+                    <TextView
+                        android:gravity="center"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/tv_follow"
+                        android:text="+关注"
+                        android:background="@drawable/xml_btn_follow"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"
+                        android:layout_width="60dp"
+                        android:layout_height="35dp" />
+                </RelativeLayout>
+
+                <!-- shadow 标题栏下部的阴影-->
+                <View
+                    android:id="@+id/header_bar_shadow"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="-6.5dp"
+                    android:background="@drawable/bottom_shadow" />
+
+            </FrameLayout>
+        </FrameLayout>
+    </com.thy.activecampus.view.ObservableScrollView>
+
+
+</RelativeLayout>

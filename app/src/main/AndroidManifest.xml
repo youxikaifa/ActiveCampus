@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.thy.activecampus">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <!--android:sharedUserId="android.uid.system"-->
+        <meta-data android:value="57c3d4cfe0f55ab675000879" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>
+        <activity android:name=".ui.activity.WelComeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.LoginA_" android:theme="@style/ImageTranslucentTheme">
+
+        </activity>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            />
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:noHistory="true"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="tencent1105758160" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.activity.RegisterA_" android:theme="@style/ImageTranslucentTheme"/>
+
+        <activity android:name=".ui.activity.MainActivity_" >
+
+        </activity>
+
+        <activity android:name=".ui.activity.AddLabelA_"/>
+        <activity android:name=".ui.activity.SearchLabelsA_" android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".ui.activity.UserA_" />
+        <activity android:name=".ui.activity.RecentScanA_"/>
+        <activity android:name=".ui.activity.ChatRoomA_" android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".ui.activity.LabelDetailA_" android:theme="@style/ImageTranslucentTheme" />
+        <activity
+            android:name=".ui.activity.ImagePickerActivity"
+            android:configChanges="orientation|screenSize"
+            android:label="@string/app_name"
+            android:theme="@style/ImagePickerTheme" />
+        <activity android:name=".ui.activity.CheckResA_"/>
+
+        <activity android:name=".ui.activity.EmployeeA_"/>
+        <activity android:name=".ui.activity.CommentA_"/>
+        <activity android:name=".ui.activity.ReviseResA_"/>
+        <activity android:name=".ui.activity.UserHomePageA_"/>
+        <activity android:name=".ui.activity.JokeA_"/>
+        <activity android:name=".ui.activity.LosingA_"/>
+
+        <activity android:name=".ui.activity.LostSearchA_"/>
+        <activity android:name=".ui.activity.LostDetailA_"/>
+        <activity android:name=".ui.activity.SendLostA_"/>
+        <activity android:name=".ui.activity.NewsWebA_"/>
+        <activity android:name=".ui.activity.FeelingA_" />
+        <activity android:name=".ui.activity.AutoDyneA_"/>
+        <activity android:name=".ui.activity.AutoDyneDetailA_" android:windowSoftInputMode="adjustNothing"/>
+        <activity android:name=".ui.activity.PubAutoDyneA_" android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+    </application>
+
+</manifest>

@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/view_spit"
+        layout="@layout/ic_spitview_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:layout_above="@id/bottom" />
+
+    <LinearLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/rl_like"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/xml_user_bg"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                 />
+
+            <TextView
+                android:id="@+id/likeNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_like"
+                android:text="12"
+                android:textColor="@color/gray" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_vertical"
+            android:layout_width="0.6dp"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/rl_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/xml_user_bg"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_comment"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/comment" />
+
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_vertical"
+            android:layout_width="0.6dp"
+            android:layout_height="match_parent" />
+
+        <RelativeLayout
+            android:id="@+id/rl_follow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/xml_user_bg"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_follow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                 />
+
+            <TextView
+                android:id="@+id/followNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/iv_follow"
+                android:text="12"
+                android:textColor="@color/gray" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/view_spit"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="21dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.thy.activecampus.widget.SlideView
+                android:id="@+id/slideview"
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+            </com.thy.activecampus.widget.SlideView>
+
+            <TextView
+                android:id="@+id/tv_join"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/selector_theme_gray"
+                android:gravity="center"
+                android:text="加入讨论"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/base_shallow_black">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/view_user"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                   android:layout_margin="10dp"
+                    fresco:placeholderImage="@drawable/ic_user_holder"
+                    fresco:roundAsCircle="true" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="70dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Jin" />
+
+                <TextView
+                    android:id="@+id/tv_pubtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="70dp"
+                    android:text="1分钟前" />
+
+                <TextView
+                    android:id="@+id/tv_notice"
+                    android:layout_width="60dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/xml_theme_rec"
+                    android:gravity="center"
+                    android:text="+关注"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+            </android.support.v7.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:text="内容描述:" />
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@color/base_shallow_black">
+
+                <TextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:text="@string/content" />
+            </android.support.v7.widget.CardView>
+
+            <ListView
+                android:id="@+id/lv_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

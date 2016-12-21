@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/rl_user_head"
+        android:layout_width="60dp"
+        android:layout_height="60dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/user_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            fresco:roundAsCircle="true"
+            android:layout_centerVertical="true"
+            fresco:placeholderImage="@drawable/ic_failload"
+            android:layout_marginLeft="16dp"
+            android:src="@drawable/ic_user1" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/rl_user_head"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="明天去钓鱼"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_toRightOf="@id/rl_user_head"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:maxLength="15"
+        android:text="求组队！求组队！"
+        android:textSize="14sp" />
+    <TextView
+        android:id="@+id/time"
+        android:text="19:50"
+        android:layout_below="@id/title"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        style="@style/common_horizontal_division_line_style_white"
+        android:layout_marginTop="3dp"
+        android:layout_below="@id/content"
+        android:layout_marginLeft="72dp" />
+
+</RelativeLayout>

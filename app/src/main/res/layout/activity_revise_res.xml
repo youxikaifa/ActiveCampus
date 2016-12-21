@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/colorPrimary">
+
+            <RelativeLayout
+                android:id="@+id/rlBack"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="16dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_back_register" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/reviseRes"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_font" />
+
+            <TextView
+                android:id="@+id/tv_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15dp"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_font" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#55aaaaaa" />
+
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/head" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/ivhead"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                fresco:placeholderImage="@mipmap/icon_avatar"
+                fresco:roundAsCircle="true" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_nick"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/nick" />
+
+            <TextView
+                android:id="@+id/nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="nickname" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_school"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/school" />
+
+            <TextView
+                android:id="@+id/school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="江西财经大学" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_reduce"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/reduce" />
+
+            <TextView
+                android:id="@+id/reduce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:ellipsize="end"
+                android:maxLength="20"
+                android:text="人见人爱,花见花开" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#55aaaaaa"
+            android:gravity="center"
+            android:text="@string/skill" />
+
+        <RelativeLayout
+            android:id="@+id/rl_good"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="技能" />
+
+            <TextView
+                android:id="@+id/skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="谈的一手好琴" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+        <include
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_habit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/habit" />
+
+            <TextView
+                android:id="@+id/habit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="夜深人静的时候,肚子叼根烟" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="#55aaaaaa"
+            android:gravity="center"
+            android:text="@string/contact" />
+
+        <RelativeLayout
+            android:id="@+id/rl_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/phone" />
+
+            <TextView
+                android:id="@+id/phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="123456789" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_qq"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/qq" />
+
+            <TextView
+                android:id="@+id/qq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="1243243423" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_weixin"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/weixin" />
+
+            <TextView
+                android:id="@+id/weixin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="微信号" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+
+    </LinearLayout>
+</ScrollView>

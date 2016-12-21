@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/lastImg"
+        android:layout_width="match_parent"
+        fresco:failureImageScaleType="centerInside"
+        fresco:placeholderImage="@drawable/ic_failload"
+        fresco:retryImageScaleType="centerCrop"
+        android:layout_height="wrap_content" />
+    <!--
+    fresco:placeholderImageScaleType="fitCenter"
+    fresco:placeholderImage="@color/gray"
+    fresco:failureImage="@mipmap/ic_launcher"
+    fresco:retryImage="@mipmap/ic_launcher"
+    -->
+
+    <TextView
+        android:id="@+id/notice"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:background="#80000000"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

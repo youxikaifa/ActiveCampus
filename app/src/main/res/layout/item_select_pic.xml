@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivSelect"
+        android:layout_width="120dp"
+        android:layout_height="match_parent" />
+    <ImageView
+        android:id="@+id/iv_cancle"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/xml_cancle_bg"
+        android:layout_width="30dp"
+        android:src="@drawable/ic_cancle"
+        android:padding="8dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="30dp" />
+</RelativeLayout>
+

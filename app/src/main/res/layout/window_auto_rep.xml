@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <RelativeLayout
+        android:id="@+id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ripple_theme"
+            android:padding="5dp"
+            android:text="发送"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:focusable="true"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_send"
+            android:background="@null"
+            android:hint="回复:"
+            android:textColorHint="#B2B1B1"
+            android:maxLines="2"
+            android:textColor="#444444"
+            android:textSize="14sp" />
+
+        <include
+            android:layout_toLeftOf="@id/tv_send"
+            layout="@layout/ic_spitview_vertical"
+            android:layout_centerVertical="true"
+            android:layout_width="0.2dp"
+            android:layout_height="25dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/space"
+        android:background="#55000000"
+        android:layout_above="@id/bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+</RelativeLayout>

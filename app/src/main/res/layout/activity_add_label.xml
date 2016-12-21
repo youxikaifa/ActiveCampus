@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_add_label"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/newActivity"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/publish"
+            android:layout_width="50dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/white"
+            android:background="@drawable/ripple_theme"
+            android:enabled="false"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:text="@string/publish" />
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/head"
+        android:background="@null"
+        android:hint="  取个标题" />
+
+    <ScrollView
+        android:id="@+id/scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_below="@id/et_title"
+        android:background="#55aaaaaa"
+        android:scrollbars="none">
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="说点什么吧。。。"
+            android:padding="10dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/hintColor" />
+    </ScrollView>
+
+    <GridView
+        android:id="@+id/gvUploadPic"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/scrollview"
+        android:layout_margin="5dp"
+        android:horizontalSpacing="5dp"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="5dp" />
+
+    <RelativeLayout
+        android:id="@+id/selectTag"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/gvUploadPic"
+        android:layout_margin="10dp"
+        android:background="@drawable/xml_pull_bg">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="请选择标签" />
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_pull" />
+    </RelativeLayout>
+
+    <com.thy.activecampus.widget.DynamicTagFlowLayout
+        android:id="@+id/fl_tags"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/selectTag"
+        android:layout_margin="5dp">
+
+    </com.thy.activecampus.widget.DynamicTagFlowLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/ic_spitview_horizontal" />
+
+        <ImageView
+            android:id="@+id/select_photo"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/xml_user_bg"
+            android:src="@drawable/ic_select_img" />
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
+
+</RelativeLayout>

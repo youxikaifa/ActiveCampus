@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary"
+        app:theme="@style/ThemeOverlay.AppCompat.ActionBar"/>
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <RelativeLayout
+            android:id="@+id/rlBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/xml_circle">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_arrow_left_gray" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/chat_room"
+            android:textSize="@dimen/title_font" />
+    </RelativeLayout>
+
+
+
+
+    <RelativeLayout
+        android:id="@+id/input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/iv_video"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
+            android:src="@mipmap/ic_vodie" />
+
+
+        <ImageView
+            android:id="@+id/iv_emoj"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="72dp"
+            android:src="@mipmap/ic_softkeyboard" />
+
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@mipmap/ic_add" />
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_toLeftOf="@id/iv_emoj"
+            android:layout_toRightOf="@id/iv_video"
+            android:background="@null"
+            android:maxLines="6"
+            android:hint="点击输入文字"
+             />
+
+        <TextView
+            android:id="@+id/btn_send"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:text="@string/send"
+            android:gravity="center"
+            android:background="@drawable/bg_send_msg"
+            android:layout_width="56dp"
+            android:layout_height="32dp" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/view_spit"
+        layout="@layout/ic_spitview_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.6dp"
+        android:layout_above="@id/input" />
+
+    <com.thy.activecampus.view.ChatMsgListView
+        android:id="@+id/lv_chat_msg"
+        android:layout_below="@id/title"
+        android:layout_width="match_parent"
+        android:layout_above="@id/view_spit"
+        android:layout_height="wrap_content">
+    </com.thy.activecampus.view.ChatMsgListView>
+
+
+</RelativeLayout>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/view_img"
+        android:layout_width="match_parent"
+        fresco:actualImageScaleType="fitXY"
+        fresco:placeholderImage="@drawable/nopic"
+        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/tv_reduce"
+        android:layout_alignParentBottom="true"
+        android:text="最新资讯"
+        android:textColor="@android:color/white"
+        android:background="@color/transport_black_bg"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:layout_height="30dp" />
+</RelativeLayout>

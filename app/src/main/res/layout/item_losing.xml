@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        fresco:placeholderImage="@drawable/nopic"
+        android:layout_margin="10dp"
+        fresco:actualImageScaleType="fitXY"
+        android:id="@+id/view_pic"
+         />
+    <LinearLayout
+        android:layout_width="150dp"
+        android:layout_toRightOf="@id/view_pic"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_height="match_parent">
+        
+        <TextView
+            android:text="title"
+            android:textSize="16sp"
+            android:id="@+id/title"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/colorPrimary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_height="20dp">
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="15dp"
+                android:id="@+id/view_head"
+                fresco:roundAsCircle="true"
+                fresco:placeholderImage="@drawable/ic_small_user"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_marginLeft="5dp"
+                android:textSize="11sp"
+                android:text="name"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="15dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_height="20dp">
+            <ImageView
+                android:layout_width="15dp"
+                android:src="@drawable/ic_small_phone"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/phone"
+                android:layout_marginLeft="5dp"
+                android:text="name"
+                android:textSize="11sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_height="20dp">
+            <ImageView
+                android:layout_width="15dp"
+                android:src="@drawable/ic_addr"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/addr"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:maxLength="20"
+                android:layout_marginLeft="5dp"
+                android:text="name"
+                android:textSize="11sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:layout_height="20dp">
+            <ImageView
+                android:src="@drawable/ic_time"
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/time"
+                android:layout_marginLeft="5dp"
+                android:text="name"
+                android:textSize="11sp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/type"
+        android:background="@drawable/xml_losing_background"
+        android:layout_width="wrap_content"
+        android:textColor="@color/white"
+        android:layout_marginRight="15dp"
+        android:text="失物"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
