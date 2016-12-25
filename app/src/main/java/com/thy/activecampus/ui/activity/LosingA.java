@@ -1,28 +1,29 @@
 package com.thy.activecampus.ui.activity;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.TabWidget;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thy.activecampus.R;
 import com.thy.activecampus.adapter.LosingAdapter;
 import com.thy.activecampus.common.MyConstants;
+import com.thy.activecampus.listener.EndLessOnScrollListener;
+import com.thy.activecampus.model.AutoDyne;
 import com.thy.activecampus.model.Losing;
 import com.thy.activecampus.net.impl.LabelReqImpl;
+import com.thy.activecampus.view.DividerItemDecoration;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -42,40 +43,57 @@ import okhttp3.Response;
  * Created by Jin on 7/29.
  */
 @EActivity(R.layout.activity_losing)
-public class LosingA extends FragmentActivity implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
+public class LosingA extends FragmentActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     public static final LabelReqImpl request = LabelReqImpl.getInstance();
 
     @ViewById(R.id.lv_losing)
-    ListView lvLosing;
+    RecyclerView lvLosing;
     @ViewById(R.id.mSwipeLayout)
     SwipeRefreshLayout mSwipeLayout;
+    @ViewById(R.id.fab)
+    FloatingActionButton fab;
 
-
-    View footerView ;
     LosingAdapter adapter;
 
     List<Losing> list;
     List<Losing> tempList ;
-    int curPage = 0;
+
 
 
     @AfterViews
     public void initViews(){
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF99CC")));
         list = new ArrayList<>();
-        footerView = LayoutInflater.from(this).inflate(R.layout.item_footer_view,null);
-        lvLosing.addFooterView(footerView);
+        lvLosing.setLayoutManager(new LinearLayoutManager(this));
+        lvLosing.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         mSwipeLayout.setOnRefreshListener(this);
         adapter = new LosingAdapter(this,list);
         lvLosing.setAdapter(adapter);
-        lvLosing.setOnScrollListener(this);
-        lvLosing.setOnItemClickListener(this);
-        fecthData();
+        lvLosing.addOnScrollListener(new EndLessOnScrollListener(lvLosing) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                onReload(currentPage);
+            }
+        });
+        adapter.setLCallBack(new LosingAdapter.LostCallBack() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(LosingA.this,LostDetailA_.class);
+                intent.putExtra("lost",list.get(position));
+                startActivity(intent);
+            }
+        });
+        onReload(0);
     }
 
     @Background
-    public void fecthData(){
+    public void onReload(int curPage) {
         String url = MyConstants.BASE_URL+"/v1/getlost?pageSize="+curPage;
+        if (curPage == 0) {
+            list.clear();
+        }
+
         request.get(url, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -84,25 +102,26 @@ public class LosingA extends FragmentActivity implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
-                String back = response.body().string();
-                tempList = new Gson().fromJson(back,new TypeToken<ArrayList<Losing>>() {}.getType());
-                if(tempList.size()>0){
-                    curPage++;
-                }
+                final String back = response.body().string();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        list.addAll(tempList);
-                        adapter.notifyDataSetChanged();
+                        tempList = new Gson().fromJson(back, new TypeToken<ArrayList<Losing>>() {
+                        }.getType());
+                        if (tempList.size()==0){
+                            adapter.changeLoadStatus(1);
+                        }else{
+                            list.addAll(tempList);
+                            adapter.notifyDataSetChanged();
+                        }
                         mSwipeLayout.setRefreshing(false);
-                        footerView.setVisibility(View.GONE);
                     }
                 });
+
             }
         });
-    }
 
+    }
 
     @Click(R.id.rl_back)
     void back(){
@@ -116,33 +135,18 @@ public class LosingA extends FragmentActivity implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        fecthData();
+        onReload(0);
     }
 
-    @Override
-    public void onScrollStateChanged(AbsListView view, int scrollState) {
-        if(scrollState==SCROLL_STATE_IDLE || scrollState==SCROLL_STATE_FLING){
-            footerView.setVisibility(View.VISIBLE);
-            fecthData();
-        }
-    }
-
-    @Override
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        if (firstVisibleItem+visibleItemCount==totalItemCount){
-
-        }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this,LostDetailA_.class);
-        intent.putExtra("lost",list.get(position));
-        startActivity(intent);
-    }
 
     @Click(R.id.fab)
     void fab(){
         startActivity(new Intent(this,SendLostA_.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onReload(0);
     }
 }

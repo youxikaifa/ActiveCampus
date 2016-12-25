@@ -42,7 +42,7 @@ public class GirlF extends Fragment implements SwipeRefreshLayout.OnRefreshListe
     public final static LabelReqImpl request = LabelReqImpl.getInstance();
     public final static int GIRL = 1;
     @ViewById(R.id.lvCommon)
-    RecyclerView lvBoy;
+    RecyclerView lvGirl;
     @ViewById(R.id.mSwipeLayout)
     SwipeRefreshLayout mSwipeLayout;
 
@@ -52,23 +52,27 @@ public class GirlF extends Fragment implements SwipeRefreshLayout.OnRefreshListe
     List<AutoDyne> tempList;
     ACache cache;
     String userId;
-
-    public LinearLayoutManager llManager= new LinearLayoutManager(getActivity());;
-
+    EndLessOnScrollListener listener;
+//    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
     @AfterViews
     public void initViews() {
+        list = new ArrayList<>();
 
         loadCache();
 
-        list = new ArrayList<>();
-//        llManager
-
         mSwipeLayout.setOnRefreshListener(this);
-        if (lvBoy.getLayoutManager() == null) {
-            lvBoy.setLayoutManager(llManager);
-        }
-        lvBoy.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        lvBoy.addOnScrollListener(listener);
+        lvGirl.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvGirl.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+
+        listener = new EndLessOnScrollListener(lvGirl) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                onReload(currentPage);
+            }
+        };
+
+
+        lvGirl.addOnScrollListener(listener);
         adapter = new AutoCommonAdapter(getActivity(), list, userId);
         adapter.setcCallBack(new AutoCommonAdapter.ChildCallBack() {
 
@@ -122,7 +126,7 @@ public class GirlF extends Fragment implements SwipeRefreshLayout.OnRefreshListe
                 });
             }
         });
-        lvBoy.setAdapter(adapter);
+        lvGirl.setAdapter(adapter);
         mSwipeLayout.setRefreshing(true);
         onReload(0);
     }
@@ -154,9 +158,9 @@ public class GirlF extends Fragment implements SwipeRefreshLayout.OnRefreshListe
                     public void run() {
                         tempList = new Gson().fromJson(back, new TypeToken<ArrayList<AutoDyne>>() {
                         }.getType());
-                        if (tempList.size()==0){
+                        if (tempList.size() == 0) {
                             adapter.changeLoadStatus(1);
-                        }else{
+                        } else {
                             list.addAll(tempList);
                             adapter.notifyDataSetChanged();
 
@@ -177,12 +181,6 @@ public class GirlF extends Fragment implements SwipeRefreshLayout.OnRefreshListe
         onReload(0);
     }
 
-    EndLessOnScrollListener listener = new EndLessOnScrollListener(llManager) {
-        @Override
-        public void onLoadMore(int currentPage) {
-            onReload(currentPage);
-        }
-    };
 
 
 }

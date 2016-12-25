@@ -1,6 +1,8 @@
 package com.thy.activecampus.ui.fragment;
 
+import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.view.animation.LinearInterpolator;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -8,6 +10,7 @@ import com.thy.activecampus.R;
 import com.thy.activecampus.adapter.TestAdapter;
 import com.thy.activecampus.base.BaseF;
 import com.thy.activecampus.ui.activity.AutoDyneA_;
+import com.thy.activecampus.ui.activity.FeelingA_;
 import com.thy.activecampus.ui.activity.JokeA;
 import com.thy.activecampus.ui.activity.JokeA_;
 import com.thy.activecampus.ui.activity.LosingA;
@@ -22,6 +25,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.umeng.analytics.a.A;
+
 /**
  * Created by Jin on 7/29.
  */
@@ -35,11 +40,8 @@ public class SortF extends BaseF {
     @AfterViews
     public void initView() {
 
-
         init();
-
         slideView.setData(list);
-
     }
 
     private void init() {
@@ -60,15 +62,14 @@ public class SortF extends BaseF {
         startActivity(new Intent(getActivity(), LosingA_.class));
     }
 
-    @Click(R.id.zhaopin)
-    void zhaopin() {
+//    @Click(R.id.zhaopin)
+//    void zhaopin() {
+//
+//    }
 
-    }
-
-    @Click(R.id.kaoyan)
-    void kaoyan() {
-
-    }
+//    @Click(R.id.kaoyan)
+//    void kaoyan() {
+//    }
 
     @Click(R.id.duanzi)
     void duanzi() {
@@ -77,13 +78,13 @@ public class SortF extends BaseF {
 
     @Click(R.id.zatan)
     void zatan() {
-
+        startActivity(new Intent(getActivity(), FeelingA_.class));
     }
 
-    @Click(R.id.dianping)
-    void dianping() {
-
-    }
+//    @Click(R.id.dianping)
+//    void dianping() {
+//
+//    }
 
     @Click(R.id.zipai)
     void zipai() {

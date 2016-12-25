@@ -216,7 +216,8 @@ public class AutoDyneDetailA extends AppCompatActivity implements AdapterView.On
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(AutoDyneDetailA.this, "tupian", Toast.LENGTH_SHORT).show();
+                hideSoft();
             }
         });
         space.setOnClickListener(new View.OnClickListener() {
@@ -277,6 +278,13 @@ public class AutoDyneDetailA extends AppCompatActivity implements AdapterView.On
         InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         //这里给它设置了弹出的时间，
         imm.toggleSoftInput(1000, InputMethodManager.HIDE_NOT_ALWAYS);
+
+    }
+
+    private void hideSoft() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        // 隐藏软键盘
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
 

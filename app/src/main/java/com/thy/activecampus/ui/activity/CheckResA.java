@@ -9,8 +9,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +50,14 @@ public class CheckResA extends SelectPicureBaseA {
     TextView tvFamale;
     @ViewById(R.id.et_name)
     EditText etName;
+    @ViewById(R.id.et_school)
+    EditText etSchool;
+    @ViewById(R.id.et_motto)
+    EditText etMotto;
     @ViewById(R.id.iv_setHead)
     SimpleDraweeView image;
+    @ViewById(R.id.progress_bar)
+    ProgressBar progressBar;
 
     private int whiteColor = Color.parseColor("#ffffff");
     private int grayColor = Color.parseColor("#aaaaaa");
@@ -102,6 +111,20 @@ public class CheckResA extends SelectPicureBaseA {
         etName.requestFocus();
     }
 
+    @Click(R.id.et_school)
+    void school() {
+        etSchool.setFocusable(true);
+        etSchool.setFocusableInTouchMode(true);
+        etSchool.requestFocus();
+    }
+
+    @Click(R.id.et_motto)
+    void motto() {
+        etMotto.setFocusable(true);
+        etMotto.setFocusableInTouchMode(true);
+        etMotto.requestFocus();
+    }
+
 
     @Click(R.id.startApp)
     void start() {
@@ -110,8 +133,25 @@ public class CheckResA extends SelectPicureBaseA {
             url = uri.toString().substring(7);
         }
 
-        uploadHead(url);
+        if (isCommit()){
+            progressBar.setVisibility(View.VISIBLE);
+            uploadHead(url);
+        }
+    }
 
+    public boolean isCommit() {
+        if (TextUtils.isEmpty(etName.getText().toString().trim())) {
+            Toast.makeText(this, "请输入昵称", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (TextUtils.isEmpty(etSchool.getText().toString().trim())) {
+            Toast.makeText(this, "请输入学校名称", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if(TextUtils.isEmpty(etMotto.getText().toString().trim())){
+            Toast.makeText(this, "请输入座右铭", Toast.LENGTH_SHORT).show();
+            return false;
+        } else{
+            return true;
+        }
     }
 
 
@@ -211,12 +251,12 @@ public class CheckResA extends SelectPicureBaseA {
     public void uploadHead(String imgPath) {
         User u = new User();
         String name = etName.getText().toString();
-        if (name.length() == 0) {
-            u.setName("还没写名字呢");
-        } else {
-            u.setName(name);
-        }
+        String school = etSchool.getText().toString();
+        String motto =etMotto.getText().toString();
 
+        u.setName(name);
+        u.setSchool(school);
+        u.setMotto(motto);
         u.setSex(sex);
         u.set_id(user.get_id());
         request = LabelReqImpl.getInstance();
@@ -235,6 +275,8 @@ public class CheckResA extends SelectPicureBaseA {
                 user.setThumb(u.getThumb());
                 user.setName(u.getName());
                 user.setSex(u.getSex());
+                user.setSchool(u.getSchool());
+                user.setMotto(u.getMotto());
 
                 cache.put(MyConstants.USER_MESSAGE, user);
 
@@ -243,8 +285,10 @@ public class CheckResA extends SelectPicureBaseA {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
                         startActivity(new Intent(CheckResA.this, MainActivity_.class));
                         Toast.makeText(CheckResA.this, "个人信息设置成功", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }

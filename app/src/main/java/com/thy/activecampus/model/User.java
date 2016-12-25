@@ -48,6 +48,7 @@ public class User implements Serializable {
     private String school;
     private String skill;
     private String habit;
+    private String motto;
     private ContactBean contact;
     private List<String> followed;
     private List<String> friend;
@@ -59,6 +60,13 @@ public class User implements Serializable {
 
     }
 
+    public String getMotto() {
+        return motto;
+    }
+
+    public void setMotto(String motto) {
+        this.motto = motto;
+    }
     public String get_id() {
         return _id;
     }

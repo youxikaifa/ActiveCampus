@@ -88,11 +88,12 @@ public class UserHomePageA extends AppCompatActivity implements SwipeRefreshLayo
         adapter = new RecentAdapter(this,labels);
         lvMyActive.setLayoutManager(llManager);
         lvMyActive.setAdapter(adapter);
-        this.adapter.setOnItemClickListener(new OnItemClickListener() {
+        adapter.setLabelCallBack(new RecentAdapter.LabelCallBack() {
             @Override
-            public void onItemClick(View view, int position) {
-                EventBus.getDefault().postSticky(labels.get(position));
-                startActivity(new Intent(UserHomePageA.this, LabelDetailA_.class));
+            public void onItemClick(int position) {
+                Intent intent = new Intent(UserHomePageA.this, LabelDetailA_.class);
+                intent.putExtra("label", labels.get(position));
+                startActivity(intent);
             }
         });
         lvMyActive.addOnScrollListener(new RecyclerView.OnScrollListener() {

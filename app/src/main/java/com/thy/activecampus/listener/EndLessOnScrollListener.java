@@ -12,6 +12,9 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
     //声明一个LinearLayoutManager
     private LinearLayoutManager mLinearLayoutManager;
 
+    //接收传过来的recyclerView
+    private RecyclerView recyclerView;
+
     //当前页，从0开始
     private int currentPage = 0;
 
@@ -30,22 +33,20 @@ public abstract class EndLessOnScrollListener extends RecyclerView.OnScrollListe
     //是否正在上拉数据
     private boolean loading = true;
 
-    public EndLessOnScrollListener(LinearLayoutManager linearLayoutManager) {
-        this.mLinearLayoutManager = linearLayoutManager;
+    public EndLessOnScrollListener(RecyclerView rView) {
+//        this.recyclerView = rView;
+        this.recyclerView = rView;
+        mLinearLayoutManager = (LinearLayoutManager) rView.getLayoutManager();
     }
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
-        System.out.println("--------->:::"+currentPage+"");
+//        System.out.println("--------->:::"+currentPage+"");
         visibleItemCount = recyclerView.getChildCount();
         totalItemCount = mLinearLayoutManager.getItemCount();
         firstVisibleItem = mLinearLayoutManager.findFirstVisibleItemPosition();
         if (loading) {
-            //Log.d("wnwn","firstVisibleItem: " +firstVisibleItem);
-            //Log.d("wnwn","totalPageCount:" +totalItemCount);
-            //Log.d("wnwn", "visibleItemCount:" + visibleItemCount)；
-
             if (totalItemCount > previousTotal) {
                 //说明数据已经加载结束
                 loading = false;

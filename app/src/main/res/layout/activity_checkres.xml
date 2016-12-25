@@ -101,9 +101,71 @@
             android:layout_height="match_parent" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_below="@id/nick"
+        android:id="@+id/school"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/xml_rec_white_bordre_gray"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_school"
+            android:id="@+id/iv_school"
+            android:layout_centerVertical="true"
+            android:layout_width="20dp"
+            android:layout_height="25dp" />
+        <EditText
+            android:id="@+id/et_school"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_toRightOf="@id/iv_school"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:hint="请输入学校全称"
+            android:textColorHint="@color/gray"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@id/school"
+        android:id="@+id/motto"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/xml_rec_white_bordre_gray"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+        <ImageView
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/ic_motto"
+            android:id="@+id/iv_motto"
+            android:layout_centerVertical="true"
+            android:layout_width="20dp"
+            android:layout_height="25dp" />
+        <EditText
+            android:id="@+id/et_motto"
+            android:focusable="false"
+            android:clickable="true"
+            android:layout_toRightOf="@id/iv_motto"
+            android:layout_width="match_parent"
+            android:background="@null"
+            android:textSize="14sp"
+            android:layout_marginLeft="5dp"
+            android:hint="输入你的座右铭"
+            android:textColorHint="@color/gray"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+
+
+
     <TextView
         android:id="@+id/startApp"
-        android:layout_below="@id/nick"
+        android:layout_below="@id/motto"
         android:text="@string/startApp"
         android:gravity="center"
         android:textColor="@color/white"
@@ -111,6 +173,13 @@
         android:background="@drawable/xml_rec_solid_follow"
         android:layout_margin="30dp"
         android:layout_height="40dp" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
 
 </RelativeLayout>

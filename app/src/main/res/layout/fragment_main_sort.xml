@@ -76,113 +76,113 @@
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/zhaopin"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ripple_theme">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/zhaopin"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/ripple_theme">-->
 
-        <ImageView
-            android:id="@+id/ic2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/ic_employ" />
+        <!--<ImageView-->
+            <!--android:id="@+id/ic2"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:src="@drawable/ic_employ" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@id/ic2"
-            android:text="校园招聘"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:layout_toRightOf="@id/ic2"-->
+            <!--android:text="校园招聘"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="16sp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/ic2"
-            android:paddingRight="5dp"
-            android:text="尝试下校园招聘的味道"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="2dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_toRightOf="@id/ic2"-->
+            <!--android:paddingRight="5dp"-->
+            <!--android:text="尝试下校园招聘的味道"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="italic" />-->
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_right" />
+        <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:src="@drawable/ic_arrow_right" />-->
 
-        <include layout="@layout/ic_spitview_horizontal" />
+        <!--<include layout="@layout/ic_spitview_horizontal" />-->
 
-        <include
-            layout="@layout/ic_spitview_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
+        <!--<include-->
+            <!--layout="@layout/ic_spitview_horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.6dp"-->
+            <!--android:layout_alignParentBottom="true" />-->
+    <!--</RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/kaoyan"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ripple_theme">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/kaoyan"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/ripple_theme">-->
 
-        <ImageView
-            android:id="@+id/ic3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/ic_exam" />
+        <!--<ImageView-->
+            <!--android:id="@+id/ic3"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:src="@drawable/ic_exam" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@id/ic3"
-            android:text="考研交流"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:layout_toRightOf="@id/ic3"-->
+            <!--android:text="考研交流"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="16sp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/ic3"
-            android:paddingRight="5dp"
-            android:text="考研有道不孤单"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="2dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_toRightOf="@id/ic3"-->
+            <!--android:paddingRight="5dp"-->
+            <!--android:text="考研有道不孤单"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="italic" />-->
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_right" />
+        <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:src="@drawable/ic_arrow_right" />-->
 
-        <include layout="@layout/ic_spitview_horizontal" />
+        <!--<include layout="@layout/ic_spitview_horizontal" />-->
 
-        <include
-            layout="@layout/ic_spitview_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
+        <!--<include-->
+            <!--layout="@layout/ic_spitview_horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.6dp"-->
+            <!--android:layout_alignParentBottom="true" />-->
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/duanzi"
@@ -292,59 +292,59 @@
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/dianping"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/ripple_theme">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/dianping"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="@drawable/ripple_theme">-->
 
-        <ImageView
-            android:id="@+id/ic7"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/dianping" />
+        <!--<ImageView-->
+            <!--android:id="@+id/ic7"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:src="@drawable/dianping" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="2dp"
-            android:layout_toRightOf="@id/ic7"
-            android:text="校园点评"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_marginTop="2dp"-->
+            <!--android:layout_toRightOf="@id/ic7"-->
+            <!--android:text="校园点评"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="16sp" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="2dp"
-            android:layout_marginLeft="15dp"
-            android:layout_toRightOf="@id/ic7"
-            android:paddingRight="5dp"
-            android:text="神一样的吐槽"
-            android:textSize="12sp"
-            android:textStyle="italic" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_marginBottom="2dp"-->
+            <!--android:layout_marginLeft="15dp"-->
+            <!--android:layout_toRightOf="@id/ic7"-->
+            <!--android:paddingRight="5dp"-->
+            <!--android:text="神一样的吐槽"-->
+            <!--android:textSize="12sp"-->
+            <!--android:textStyle="italic" />-->
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:src="@drawable/ic_arrow_right" />
+        <!--<ImageView-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:src="@drawable/ic_arrow_right" />-->
 
-        <include layout="@layout/ic_spitview_horizontal" />
+        <!--<include layout="@layout/ic_spitview_horizontal" />-->
 
-        <include
-            layout="@layout/ic_spitview_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:layout_alignParentBottom="true" />
-    </RelativeLayout>
+        <!--<include-->
+            <!--layout="@layout/ic_spitview_horizontal"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0.6dp"-->
+            <!--android:layout_alignParentBottom="true" />-->
+    <!--</RelativeLayout>-->
 
     <RelativeLayout
         android:id="@+id/zipai"

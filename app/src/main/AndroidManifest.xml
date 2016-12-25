@@ -54,12 +54,12 @@
 
         </activity>
 
-        <activity android:name=".ui.activity.AddLabelA_"/>
+        <activity android:name=".ui.activity.AddLabelA_" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".ui.activity.SearchLabelsA_" android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".ui.activity.UserA_" />
         <activity android:name=".ui.activity.RecentScanA_"/>
         <activity android:name=".ui.activity.ChatRoomA_" android:windowSoftInputMode="adjustResize|stateHidden"/>
-        <activity android:name=".ui.activity.LabelDetailA_" android:theme="@style/ImageTranslucentTheme" />
+        <activity android:name=".ui.activity.LabelDetailA_" />
         <activity
             android:name=".ui.activity.ImagePickerActivity"
             android:configChanges="orientation|screenSize"
@@ -82,6 +82,8 @@
         <activity android:name=".ui.activity.AutoDyneA_"/>
         <activity android:name=".ui.activity.AutoDyneDetailA_" android:windowSoftInputMode="adjustNothing"/>
         <activity android:name=".ui.activity.PubAutoDyneA_" android:windowSoftInputMode="adjustPan|stateAlwaysHidden"/>
+        <activity android:name=".ui.activity.FeelDetailA_"/>
+        <activity android:name=".ui.activity.SelectTypeA_"/>
     </application>
 
 </manifest>

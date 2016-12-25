@@ -42,7 +42,7 @@ public class CoupleF extends Fragment implements SwipeRefreshLayout.OnRefreshLis
     public final static LabelReqImpl request = LabelReqImpl.getInstance();
     public final static int COUPLE = 2;
     @ViewById(R.id.lvCommon)
-    RecyclerView lvBoy;
+    RecyclerView lvCouple;
     @ViewById(R.id.mSwipeLayout)
     SwipeRefreshLayout mSwipeLayout;
 
@@ -53,21 +53,29 @@ public class CoupleF extends Fragment implements SwipeRefreshLayout.OnRefreshLis
     ACache cache;
     String userId;
 
-    public LinearLayoutManager llManager= new LinearLayoutManager(getActivity());;
+//    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 
+    EndLessOnScrollListener listener;
     @AfterViews
     public void initViews() {
+        list = new ArrayList<>();
 
         loadCache();
 
-        list = new ArrayList<>();
-
         mSwipeLayout.setOnRefreshListener(this);
-        if (lvBoy.getLayoutManager() == null) {
-            lvBoy.setLayoutManager(llManager);
-        }
-        lvBoy.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
-        lvBoy.addOnScrollListener(listener);
+        lvCouple.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lvCouple.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
+
+
+        listener = new EndLessOnScrollListener(lvCouple) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                onReload(currentPage);
+            }
+        };
+
+
+        lvCouple.addOnScrollListener(listener);
         adapter = new AutoCommonAdapter(getActivity(), list, userId);
         adapter.setcCallBack(new AutoCommonAdapter.ChildCallBack() {
 
@@ -121,7 +129,7 @@ public class CoupleF extends Fragment implements SwipeRefreshLayout.OnRefreshLis
                 });
             }
         });
-        lvBoy.setAdapter(adapter);
+        lvCouple.setAdapter(adapter);
         mSwipeLayout.setRefreshing(true);
         onReload(0);
     }
@@ -153,9 +161,9 @@ public class CoupleF extends Fragment implements SwipeRefreshLayout.OnRefreshLis
                     public void run() {
                         tempList = new Gson().fromJson(back, new TypeToken<ArrayList<AutoDyne>>() {
                         }.getType());
-                        if (tempList.size()==0){
+                        if (tempList.size() == 0) {
                             adapter.changeLoadStatus(1);
-                        }else{
+                        } else {
                             list.addAll(tempList);
                             adapter.notifyDataSetChanged();
 
@@ -172,16 +180,11 @@ public class CoupleF extends Fragment implements SwipeRefreshLayout.OnRefreshLis
 
     @Override
     public void onRefresh() {
+        System.out.println("------------->?刷新了couple");
         listener.resetPage();
         onReload(0);
     }
 
-    EndLessOnScrollListener listener = new EndLessOnScrollListener(llManager) {
-        @Override
-        public void onLoadMore(int currentPage) {
-            onReload(currentPage);
-        }
-    };
 
 
 }

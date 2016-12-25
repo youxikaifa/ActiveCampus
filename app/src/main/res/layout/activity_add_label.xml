@@ -1,140 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_add_label"
     android:layout_width="match_parent"
+    android:background="#F3F3F3"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:layout_centerInParent="true"
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
+
     <RelativeLayout
-        android:id="@+id/head"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary">
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="15dp"
-            android:src="@drawable/ic_arrow_back" />
-
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/newActivity"
+            android:text="发布活动"
             android:textColor="@color/white"
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/publish"
-            android:layout_width="50dp"
-            android:layout_height="35dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="15dp"
-            android:textColor="@color/white"
-            android:background="@drawable/ripple_theme"
-            android:enabled="false"
-            android:textSize="18sp"
-            android:gravity="center"
-            android:text="@string/publish" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/et_title"
+    <RelativeLayout
+        android:id="@+id/rlTitle"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/head"
-        android:background="@null"
-        android:hint="  取个标题" />
-
-    <ScrollView
-        android:id="@+id/scrollview"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_below="@id/et_title"
-        android:background="#55aaaaaa"
-        android:scrollbars="none">
+        android:layout_height="200dp"
+        android:layout_below="@id/title"
+        android:background="#F3F3F3">
 
         <EditText
-            android:id="@+id/content"
+            android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:hint="说点什么吧。。。"
-            android:padding="10dp"
-            android:textColor="@android:color/white"
-            android:textColorHint="@color/hintColor" />
-    </ScrollView>
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:hint="说点什么吧.." />
+    </RelativeLayout>
 
-    <GridView
-        android:id="@+id/gvUploadPic"
+    <RelativeLayout android:background="#E9EFF1"
+        android:id="@+id/pic"
+        android:layout_alignParentBottom="true"
+        android:layout_height="267dp"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/scrollview"
-        android:layout_margin="5dp"
-        android:horizontalSpacing="5dp"
-        android:numColumns="3"
-        android:scrollbars="none"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="5dp" />
+        >
 
-    <RelativeLayout
-        android:id="@+id/selectTag"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@id/gvUploadPic"
-        android:layout_margin="10dp"
-        android:background="@drawable/xml_pull_bg">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lvPics"
+            android:visibility="gone"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:scrollbars="none"
+            >
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/ivAdd"
+            android:layout_centerHorizontal="true"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:layout_width="120dp"
+            android:src="@drawable/ic_add_pic" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:gravity="center"
+            android:id="@+id/tvNotice"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="请选择标签" />
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_pull" />
+            android:layout_marginBottom="30dp"
+            android:layout_width="wrap_content"
+            android:text="可选择10张图片"
+            android:textColor="#B1C2C9"
+            android:textSize="12sp" />
     </RelativeLayout>
-
-    <com.thy.activecampus.widget.DynamicTagFlowLayout
-        android:id="@+id/fl_tags"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/selectTag"
-        android:layout_margin="5dp">
-
-    </com.thy.activecampus.widget.DynamicTagFlowLayout>
 
     <RelativeLayout
+        android:layout_above="@id/pic"
+        android:id="@+id/rl_notice"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true">
-
-        <include layout="@layout/ic_spitview_horizontal" />
+        android:background="@color/white">
 
         <ImageView
-            android:id="@+id/select_photo"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
+            android:id="@+id/iv_select_pics"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/ripple_theme"
+            android:padding="15dp"
+            android:src="@drawable/ic_select_img" />
+
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_person_sort"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_toRightOf="@id/iv_select_pics"-->
+            <!--android:background="@drawable/ripple_theme"-->
+            <!--android:padding="13dp"-->
+            <!--android:src="@drawable/ic_person_sort" />-->
+
+
+        <TextView
+            android:id="@+id/tvSelectNum"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/xml_select_num_bg"
+            android:gravity="center"
+            android:text="5"
+            android:textSize="8sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_pub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/xml_user_bg"
-            android:src="@drawable/ic_select_img" />
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ripple_theme"
+            android:padding="10dp"
+            android:text="发送"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp" />
     </RelativeLayout>
 
 
-    <ProgressBar
-        android:id="@+id/progress"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
 
 </RelativeLayout>

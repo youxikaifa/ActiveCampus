@@ -55,6 +55,8 @@ public class ReviseResA extends SelectPicureBaseA {
     TextView tvQQ;
     @ViewById(R.id.weixin)
     TextView tvWeixin;
+    @ViewById(R.id.motto)
+    TextView tvMotto;
 
     LabelReqImpl request = LabelReqImpl.getInstance();
     EditText etInput;
@@ -65,7 +67,7 @@ public class ReviseResA extends SelectPicureBaseA {
     String path = null;
     String name = null,school = null,reduce = null,
             skill = null,habit = null,phone = null,
-            qq = null,weixin = null,weibo = null;
+            qq = null,weixin = null,weibo = null,motto = null;
 
 
     @AfterViews
@@ -81,7 +83,9 @@ public class ReviseResA extends SelectPicureBaseA {
         }else{
             ivHead.setImageURI(MyConstants.BASE_URL_ANOTHER_PORT+user.getThumb());
         }
-
+        if (user.getMotto()!=null){
+            tvMotto.setText(user.getMotto());
+        }
         tvNick.setText(user.getName());
         tvSchool.setText(user.getSchool());
         tvReduce.setText(user.getReduce());
@@ -117,6 +121,25 @@ public class ReviseResA extends SelectPicureBaseA {
         builder.setCancelable(true);
         Dialog dialog = builder.create();
         dialog.show();
+    }
+
+    public void fixMottoDialog(){
+        etInput = new EditText(this);
+        new AlertDialog.Builder(this)
+                .setTitle("书写你的右铭")
+                .setIcon(R.drawable.ic_motto)
+                .setView(etInput)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String str =  etInput.getText().toString();
+                        if (str.length()>0){
+                            tvMotto.setText(str);
+                            motto = str;
+                        }
+                    }
+                })
+                .show();
     }
 
     public void fixNameDialog() {
@@ -328,6 +351,7 @@ public class ReviseResA extends SelectPicureBaseA {
         u.setSchool(school);
         u.setSkill(skill);
         u.setHabit(habit);
+        u.setMotto(motto);
         bean.setPhone(phone);
         bean.setQq(qq);
         bean.setWeixin(weixin);
@@ -396,5 +420,10 @@ public class ReviseResA extends SelectPicureBaseA {
     @Click(R.id.rl_weixin)
     void weixin() {
         fixWeixinDialog();
+    }
+
+    @Click(R.id.rl_motto)
+    void motto(){
+        fixMottoDialog();
     }
 }

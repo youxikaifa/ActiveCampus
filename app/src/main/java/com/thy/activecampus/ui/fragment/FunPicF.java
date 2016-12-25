@@ -47,7 +47,7 @@ public class FunPicF extends Fragment implements SwipeRefreshLayout.OnRefreshLis
     @AfterViews
     public void initViews() {
         lvFunPic.setDividerHeight(50);
-        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_footer_view, null);
+        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_footer_view1, null);
         funpics = new ArrayList<>();
         mSwipeLayout.setOnRefreshListener(this);
         lvFunPic.setOnScrollListener(this);

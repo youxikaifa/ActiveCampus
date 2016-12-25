@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/view_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="10dp"
+            fresco:placeholderImage="@drawable/ic_user1"
+            fresco:roundAsCircle="true" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/view_head">
+
+            <ImageView
+                android:id="@+id/iv_sex"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ic_famale" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/iv_sex"
+                android:text="innocence"
+                android:textColor="#12AFFE"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_motto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_marginTop="5dp"
+                android:text="光阴似箭,日月如梭"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/head">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="七月踩着安生的影子过一生"
+            android:textColor="#424242"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:visibility="gone"
+        android:layout_marginTop="10dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/view_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            fresco:placeholderImage="@drawable/nopic" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:background="@drawable/xml_pic_bg_gray"
+            android:padding="3dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/picNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:text="1"
+                    android:textColor="@color/white" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/picNum"
+                    android:src="@drawable/ic_pic_notice" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+
+    <include
+        android:layout_marginTop="5dp"
+        android:id="@+id/divider"
+        layout="@layout/ic_spitview_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0.3dp"
+        android:layout_below="@id/fl_content" />
+
+    <RelativeLayout
+        android:id="@+id/notice"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_below="@id/divider"
+        android:layout_margin="10dp"
+        >
+
+        <TextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="来自" />
+
+        <TextView
+            android:layout_toRightOf="@id/tv1"
+            android:id="@+id/tv_school"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="#12AFFE"
+            android:text="江西财经大学" />
+
+        <TextView
+            android:layout_alignParentRight="true"
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20分钟前" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/notice"
+        android:orientation="horizontal">
+
+
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_feel_rep_gray"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:textSize="8sp"
+            android:text="2"
+            android:textColor="#bfbfbf" />
+
+        <TextView
+
+            android:id="@+id/tv_like"
+            android:layout_toLeftOf="@id/tv_comment"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/ic_feel_like_gray"
+            android:gravity="center"
+            android:text="2"
+            android:textSize="8sp"
+            android:textColor="#bfbfbf" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/lv_likes"
+            android:layout_marginLeft="10dp"
+            android:layout_toLeftOf="@id/tv_like"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+             />
+
+    </RelativeLayout>
+
+</RelativeLayout>

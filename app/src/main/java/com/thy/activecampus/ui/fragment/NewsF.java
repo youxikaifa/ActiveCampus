@@ -34,7 +34,7 @@ import okhttp3.Response;
 /**
  * Created by Jin on 7/29.
  */
-@EFragment(R.layout.fragment_common)
+@EFragment(R.layout.fragment_common_funny)
 public class NewsF extends Fragment implements SwipeRefreshLayout.OnRefreshListener, AbsListView.OnScrollListener, AdapterView.OnItemClickListener {
     public final static LabelReqImpl request = LabelReqImpl.getInstance();
     @ViewById(R.id.lvDuanZi)
@@ -50,7 +50,7 @@ public class NewsF extends Fragment implements SwipeRefreshLayout.OnRefreshListe
 
     @AfterViews
     public void initViews() {
-        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_footer_view, null);
+        footerView = LayoutInflater.from(getActivity()).inflate(R.layout.item_footer_view1, null);
         news = new ArrayList<>();
         mSwipeLayout.setOnRefreshListener(this);
         lvNews.setOnScrollListener(this);

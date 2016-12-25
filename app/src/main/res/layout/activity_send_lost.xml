@@ -25,7 +25,7 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_back_register" />
+                    android:src="@drawable/ic_arrow_back" />
             </RelativeLayout>
 
             <TextView
@@ -216,7 +216,6 @@
             android:id="@+id/gvAddPic"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:layout_below="@id/scrollview"
             android:layout_margin="5dp"
             android:horizontalSpacing="5dp"
             android:numColumns="3"

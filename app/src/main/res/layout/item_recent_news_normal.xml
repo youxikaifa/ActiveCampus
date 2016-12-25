@@ -1,123 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+    android:id="@+id/itemView"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
 
-    <android.support.v7.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_margin="5dp"
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        fresco:placeholderImage="@mipmap/icon_avatar"
+        fresco:roundAsCircle="true" />
+
+    <ImageView
+        android:id="@+id/iv_sex"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_toRightOf="@id/head"
+        android:src="@drawable/ic_famale" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:textColor="#12AFFE"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/transparent">
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/iv_sex"
+        android:text="我叫小小鸟" />
+
+
+    <TextView
+        android:id="@+id/tv_motto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="5dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="我是标题"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/head"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:maxLines="5"
+        android:text="你在干嘛"
+        android:textSize="16sp" />
+
+    <FrameLayout
+        android:id="@+id/fl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@id/tv_content"
+        android:layout_marginTop="10dp">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/view_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            fresco:placeholderImage="@drawable/nopic" />
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="10dp"
+            android:background="@drawable/xml_pic_bg_gray"
+            android:padding="3dp">
 
-            <ImageView
-                android:layout_alignParentRight="true"
-                android:src="@drawable/ic_suggest"
-                android:id="@+id/iv_type"
-                android:layout_width="40dp"
-                android:layout_height="40dp" />
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/head"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                fresco:placeholderImage="@drawable/ic_failload"
-                fresco:roundAsCircle="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                />
-
-            <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="12dp"
-                android:id="@+id/iv_sex"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_toRightOf="@id/head"
-                android:src="@drawable/ic_famale" />
-
-            <TextView
-                android:id="@+id/name"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/iv_sex"
-                android:text="我叫小小鸟" />
-
-
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/name"
-                android:layout_marginLeft="70dp"
-                android:layout_marginTop="5dp"
-                android:maxLines="1"
-                android:ellipsize="end"
-                android:text="我是标题"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/title_size" />
-
-            <TextView
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/head"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:maxLines="5"
-                android:text="你在干嘛" />
-
-            <com.thy.activecampus.view.NoScrollGridView
-                android:id="@+id/gridImgs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:layout_below="@id/content"
-                android:layout_marginLeft="1dp"
-                android:horizontalSpacing="1.5dp"
-                android:layout_marginRight="1dp"
-                android:numColumns="3"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="1.5dp">
-            </com.thy.activecampus.view.NoScrollGridView>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@id/gridImgs"
-                android:layout_marginTop="10dp">
-
-                <com.thy.activecampus.widget.DynamicTagFlowLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_toLeftOf="@id/publish"
-                    android:id="@+id/tags"
-                    android:layout_centerVertical="true"
-                    android:layout_height="match_parent">
-
-                </com.thy.activecampus.widget.DynamicTagFlowLayout>
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
 
                 <TextView
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/pubTime"
+                    android:id="@+id/picNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:text="2 hour ago" />
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="4dp"
+                    android:text="1"
+                    android:textColor="@color/white" />
 
-
-            </RelativeLayout>
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/picNum"
+                    android:src="@drawable/ic_pic_notice" />
+            </LinearLayout>
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@id/fl_content"
+        android:layout_marginTop="10dp">
+
+
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:text="2 hour ago" />
+
+        <com.thy.activecampus.widget.DynamicTagFlowLayout
+            android:id="@+id/tags"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_time"
+            android:orientation="horizontal">
+
+        </com.thy.activecampus.widget.DynamicTagFlowLayout>
+    </RelativeLayout>
+
 </RelativeLayout>

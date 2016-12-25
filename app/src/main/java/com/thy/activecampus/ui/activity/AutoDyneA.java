@@ -72,7 +72,9 @@ public class AutoDyneA extends AppCompatActivity {
 
     @Click(R.id.fab)
     void fab(){
-        startActivity(new Intent(this,PubAutoDyneA_.class));
+        Intent intent = new Intent(this,PubAutoDyneA_.class);
+        intent.putExtra("type","autodyne");
+        startActivity(intent);
     }
 
 

@@ -26,7 +26,7 @@
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_centerInParent="true"
-                    android:src="@drawable/ic_back_register" />
+                    android:src="@drawable/ic_arrow_back" />
             </RelativeLayout>
 
             <TextView
@@ -158,6 +158,46 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="30dp"
                 android:text="江西财经大学" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/ic_arrow_right" />
+        </RelativeLayout>
+
+        <include
+            android:id="@+id/view_spit"
+            layout="@layout/ic_spitview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0.6dp"
+            android:layout_above="@id/input" />
+
+        <RelativeLayout
+            android:id="@+id/rl_motto"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/xml_user_bg"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:text="@string/motto" />
+
+            <TextView
+                android:id="@+id/motto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                android:text="光阴似箭日月如梭" />
 
             <ImageView
                 android:layout_width="20dp"

@@ -53,19 +53,25 @@ public class BoyF extends Fragment implements SwipeRefreshLayout.OnRefreshListen
     ACache cache;
     String userId;
 
-    public LinearLayoutManager llManager= new LinearLayoutManager(getActivity());;
+    EndLessOnScrollListener listener;
+
 
     @AfterViews
     public void initViews() {
 
+        list = new ArrayList<>();
         loadCache();
 
-        list = new ArrayList<>();
 
-        mSwipeLayout.setOnRefreshListener(this);
-        if (lvBoy.getLayoutManager() == null) {
-            lvBoy.setLayoutManager(llManager);
-        }
+        lvBoy.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        listener = new EndLessOnScrollListener(lvBoy) {
+            @Override
+            public void onLoadMore(int currentPage) {
+                onReload(currentPage);
+            }
+        };
+
         lvBoy.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
         lvBoy.addOnScrollListener(listener);
         adapter = new AutoCommonAdapter(getActivity(), list, userId);
@@ -123,6 +129,7 @@ public class BoyF extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         });
         lvBoy.setAdapter(adapter);
         mSwipeLayout.setRefreshing(true);
+        mSwipeLayout.setOnRefreshListener(this);
         onReload(0);
     }
 
@@ -176,12 +183,7 @@ public class BoyF extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         onReload(0);
     }
 
-    EndLessOnScrollListener listener = new EndLessOnScrollListener(llManager) {
-        @Override
-        public void onLoadMore(int currentPage) {
-            onReload(currentPage);
-        }
-    };
+
 
 
 }

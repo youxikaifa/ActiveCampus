@@ -36,6 +36,8 @@ public class AutoDyne implements Serializable{
     private int scans; //
     private List<String> pics;//
     private List<?> likes; //
+    private String school;
+    private String motto;
 
     public String get_id() {
         return _id;
@@ -123,5 +125,21 @@ public class AutoDyne implements Serializable{
 
     public void setLikes(List<?> likes) {
         this.likes = likes;
+    }
+
+    public String getMotto() {
+        return motto;
+    }
+
+    public void setMotto(String motto) {
+        this.motto = motto;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
     }
 }

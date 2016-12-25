@@ -1,10 +1,12 @@
 package com.thy.activecampus.ui.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,6 +20,7 @@ import com.thy.activecampus.base.BaseA;
 import com.thy.activecampus.common.ACache;
 import com.thy.activecampus.common.MyConstants;
 import com.thy.activecampus.model.AutoDyne;
+import com.thy.activecampus.model.FeelModel;
 import com.thy.activecampus.model.Image;
 import com.thy.activecampus.model.User;
 import com.thy.activecampus.net.impl.LabelReqImpl;
@@ -47,6 +50,8 @@ import okhttp3.Response;
 public class PubAutoDyneA extends BaseA {
 
     public final static LabelReqImpl request = LabelReqImpl.getInstance();
+    private static final String FEELING = "feel";
+    private static final String AUTODYNE = "autodyne";
 
     @ViewById(R.id.et_title)
     EditText etTitle;
@@ -62,6 +67,8 @@ public class PubAutoDyneA extends BaseA {
     ViewPager viewPager;
     @ViewById(R.id.progress_bar)
     ProgressBar progressBar;
+    @ViewById(R.id.tv_title)
+    TextView title;
 
     public  ArrayList<Image> images = new ArrayList<>();
 
@@ -75,9 +82,11 @@ public class PubAutoDyneA extends BaseA {
     List<Fragment> fragments;
     SelectImgFAdapter adapter;
 
+    String _type; //要发送的是那种动态 心情还是自拍
 
     @AfterViews
     public void initViews(){
+        getArgs();
         loadCache();
         fragments = new ArrayList<>();
         selectImgF = new SelectImgF_();
@@ -86,6 +95,16 @@ public class PubAutoDyneA extends BaseA {
         fragments.add(selectTypeF);
         adapter = new SelectImgFAdapter(getSupportFragmentManager(),fragments);
         viewPager.setAdapter(adapter);
+    }
+
+    private void getArgs() {
+        Intent intent = getIntent();
+        _type = intent.getStringExtra("type");
+        if (_type.equals(FEELING)){
+            title.setText("发心情");
+        }else{
+            title.setText("发自拍");
+        }
     }
 
     @Background
@@ -99,39 +118,79 @@ public class PubAutoDyneA extends BaseA {
     void pub(){
         if (isCommit()){
             progressBar.setVisibility(View.VISIBLE);
+            if(_type.equals(AUTODYNE)){
+                AutoDyne autodyne = new AutoDyne();
+                autodyne.setUserId(user.get_id());
+                autodyne.setName(user.getName());
+                autodyne.setPics(imgPaths);
+                autodyne.setHead(user.getThumb());
+                autodyne.setTitle(etTitle.getText().toString());
+                autodyne.setType(type);
+                autodyne.setMotto(user.getMotto());
+                autodyne.setSchool(user.getSchool());
+                request.pubAutoDyne(MyConstants.BASE_URL, autodyne, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        imgPaths.clear();
+                    }
 
-            AutoDyne autodyne = new AutoDyne();
-            autodyne.setUserId(user.get_id());
-            autodyne.setName(user.getName());
-            autodyne.setPics(imgPaths);
-            autodyne.setHead(user.getThumb());
-            autodyne.setTitle(etTitle.getText().toString());
-            autodyne.setType(type);
-            request.pubAutoDyne(MyConstants.BASE_URL, autodyne, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    imgPaths.clear();
-                }
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        imgPaths.clear();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                                PubAutoDyneA.this.finish();
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    imgPaths.clear();
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressBar.setVisibility(View.GONE);
-                            PubAutoDyneA.this.finish();
+                            }
+                        });
+                    }
+                });
+            }else{
+                FeelModel model = new FeelModel();
+                model.setUserId(user.get_id());
+                model.setName(user.getName());
+                model.setPics(imgPaths);
+                model.setHead(user.getThumb());
+                model.setContent(etTitle.getText().toString());
+                model.setType(type);
+                model.setSex(user.getSex());
+                model.setMotto(user.getMotto());
+                model.setSchool(user.getSchool());
 
-                        }
-                    });
-                }
-            });
+                request.pubFeeling(MyConstants.BASE_URL, model, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        imgPaths.clear();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        imgPaths.clear();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressBar.setVisibility(View.GONE);
+                                PubAutoDyneA.this.finish();
+
+                            }
+                        });
+                    }
+                });
+            }
+
         }
     }
 
     public boolean isCommit() {
         if (TextUtils.isEmpty(etTitle.getText().toString().trim())) {
-            Toast.makeText(this, "请输入标题", Toast.LENGTH_SHORT).show();
+            if (_type.equals(FEELING)){
+                Toast.makeText(this, "请输入内容", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(this, "请输入标题", Toast.LENGTH_SHORT).show();
+            }
+
             return false;
         } else if (images.size()==0) {
             Toast.makeText(this, "请选择相片", Toast.LENGTH_SHORT).show();
@@ -143,7 +202,15 @@ public class PubAutoDyneA extends BaseA {
 
     @Click(R.id.iv_select_pics)
     void select(){
+//        hideSoftInput();
         viewPager.setCurrentItem(0);
+        if(getWindow().getAttributes().softInputMode== WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED)
+
+        {
+
+            hideSoftInput();
+
+        }
     }
 
     @Click(R.id.rlTitle)
@@ -162,6 +229,13 @@ public class PubAutoDyneA extends BaseA {
         //这里给它设置了弹出的时间，
         imm.toggleSoftInput(1000, InputMethodManager.HIDE_NOT_ALWAYS);
     }
+
+    private void hideSoftInput(){
+        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //这里给它设置了弹出的时间，
+        imm.toggleSoftInput(1000, InputMethodManager.RESULT_HIDDEN);
+    }
+
 
 
     public void onReloadImgs(List<Image> imgs,List<String> paths){

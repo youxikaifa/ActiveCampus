@@ -20,7 +20,7 @@ public class MyConstants {
     public static final String PREF_CAMERA_REQUESTED = "cameraRequested";
     public static final String APP_ID = "1105758160";
 
-    public static final String IP = "http://192.168.1.109";
+    public static final String IP = "http://121.42.206.117";
     public static final String BASE_URL_ANOTHER_PORT = IP+":2016";
     public static final String LOCALHOST = IP+":2016";
     public static final String URL_FOR_CHATROOM = BASE_URL_ANOTHER_PORT+"/chatroom";

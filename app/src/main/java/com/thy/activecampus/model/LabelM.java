@@ -36,6 +36,8 @@ public class LabelM implements Serializable{
     private String title;
     private String content;
     private String pubTime;
+    private String motto;
+    private String school;
     private int type;
     private List<String> tags;
     private List<CommentsBean> comments;
@@ -43,6 +45,22 @@ public class LabelM implements Serializable{
     private List<String> likes;
     private List<String> picUrls;
 
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getMotto() {
+        return motto;
+    }
+
+    public void setMotto(String motto) {
+        this.motto = motto;
+    }
     public String get_id() {
         return _id;
     }

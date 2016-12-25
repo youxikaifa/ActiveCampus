@@ -1,8 +1,6 @@
 package com.thy.activecampus.adapter;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.graphics.drawable.Animatable;
 import android.net.Uri;
 import android.support.annotation.Nullable;
@@ -12,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -65,7 +62,7 @@ public class AutoCommonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             ItemViewHolder itemViewHolder = new ItemViewHolder(view);
             return itemViewHolder;
         }else if (viewType == TYPE_FOOTER){
-            View view = inflater.inflate(R.layout.item_footer_view,parent,false);
+            View view = inflater.inflate(R.layout.item_footer_view1,parent,false);
             FootViewHolder footViewHolder = new FootViewHolder(view);
             return footViewHolder;
 
@@ -186,7 +183,7 @@ public class AutoCommonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         TextView tv_footer;
         public FootViewHolder(View view) {
             super(view);
-            tv_footer=(TextView)view.findViewById(R.id.tv_footer);
+            tv_footer=(TextView)view.findViewById(R.id.tv_footer__view);
         }
     }
 

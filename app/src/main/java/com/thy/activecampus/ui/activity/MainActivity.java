@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -38,7 +39,7 @@ public class MainActivity extends BaseA {
     @ViewById(R.id.bottom_navigation_bar)
     BottomNavigationBar tabBar;
     @ViewById(R.id.content)
-    FrameLayout flContent;
+    RelativeLayout flContent;
 
 
     private FragmentManager fm;
@@ -59,20 +60,19 @@ public class MainActivity extends BaseA {
     @AfterViews
     public void initViews() {
 
-
-        tabBar.addItem(new BottomNavigationItem(R.drawable.ic_message, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_home, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_sort, ""))
-                .addItem(new BottomNavigationItem(R.drawable.ic_my, ""))
+        tabBar.addItem(new BottomNavigationItem(R.drawable.ic_message, "消息"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_home, "主页"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_sort, "分类"))
+                .addItem(new BottomNavigationItem(R.drawable.ic_my, "我的"))
                 .setActiveColor(R.color.colorPrimary)
-                .setInActiveColor(R.color.white)
-//                .setMode(BottomNavigationBar.MODE_FIXED)
+                .setInActiveColor(R.color.gray)
+                .setMode(BottomNavigationBar.MODE_FIXED)
 
-//                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
+                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_DEFAULT)
                 .setFirstSelectedPosition(0)
 
                 .initialise();
-//        tabBar.setAutoHideEnabled(true);
+        tabBar.setAutoHideEnabled(true);
 
 
         tabBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
@@ -140,7 +140,6 @@ public class MainActivity extends BaseA {
 
             }
         });
-
     }
 
 
@@ -149,23 +148,6 @@ public class MainActivity extends BaseA {
             ft.hide(fragments[oldPosition]);
         }
         oldPosition = newPosition;
-    }
-
-
-//    @Click(R.id.user_head)
-//    void userHead() {
-//        startActivity(new Intent(this, UserA_.class));
-//        overridePendingTransition(R.anim.a_show_from_left, R.anim.b_hide_from_left);
-//    }
-
-
-
-    public void onResume() {
-        super.onResume();
-    }
-
-    public void onPause() {
-        super.onPause();
     }
 
 
@@ -188,5 +170,12 @@ public class MainActivity extends BaseA {
             ft.add(R.id.content, mesageF);
             ft.commit();
         }
+    }
+    public MyCallBack callBack;
+    public interface MyCallBack{
+        void onTabhide(BottomNavigationBar bar);
+    }
+    public void setTCallback(MyCallBack callback){
+        this.callBack = callback;
     }
 }

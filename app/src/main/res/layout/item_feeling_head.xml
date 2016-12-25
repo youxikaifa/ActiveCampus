@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/space"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/view_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:padding="10dp"
+            fresco:placeholderImage="@drawable/ic_user1"
+            fresco:roundAsCircle="true" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/view_head">
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#12AFFE"
+                android:textSize="16sp"
+                android:text="锦大侠" />
+
+            <TextView
+                android:id="@+id/tv_time"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_name"
+                android:layout_marginTop="5dp"
+                android:text="此页面可发此时此刻的心情感想" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/xml_rec_gray"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:layout_marginRight="15dp"
+            android:text="置顶"
+            android:textColor="@android:color/holo_orange_dark" />
+
+    </RelativeLayout>
+
+</LinearLayout>

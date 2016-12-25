@@ -48,11 +48,10 @@ dependencies {
     compile('io.socket:socket.io-client:0.8.1') {
         exclude group: 'org.json', module: 'json'
     }
-    compile 'com.github.githubwing:ByeBurger:1.1.0'  //底部侧边栏隐藏
+    compile 'com.github.githubwing:ByeBurger:1.2.3'  //底部导航栏隐藏
     compile 'com.android.support:design:25.0.0'
 //    compile 'me.imid.swipebacklayout.lib:library:1.0.0'
 
-    compile 'it.neokree:MaterialTabs:0.11'
 }
 
 apt {

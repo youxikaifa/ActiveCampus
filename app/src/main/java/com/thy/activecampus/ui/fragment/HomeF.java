@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thy.activecampus.R;
@@ -20,13 +21,18 @@ import com.thy.activecampus.adapter.RecentAdapter;
 import com.thy.activecampus.base.BaseF;
 import com.thy.activecampus.common.ACache;
 import com.thy.activecampus.common.MyConstants;
+import com.thy.activecampus.listener.EndLessOnScrollListener;
 import com.thy.activecampus.listener.OnItemClickListener;
 import com.thy.activecampus.model.LabelM;
+import com.thy.activecampus.model.SelectType;
 import com.thy.activecampus.model.User;
 import com.thy.activecampus.net.impl.LabelReqImpl;
 import com.thy.activecampus.ui.activity.AddLabelA_;
 import com.thy.activecampus.ui.activity.LabelDetailA_;
+import com.thy.activecampus.ui.activity.MainActivity;
 import com.thy.activecampus.ui.activity.SearchLabelsA_;
+import com.thy.activecampus.ui.activity.SelectTypeA_;
+import com.thy.activecampus.view.DividerItemDecoration;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -54,10 +60,7 @@ import okhttp3.Response;
 public class HomeF extends BaseF implements SwipeRefreshLayout.OnRefreshListener {
 
     private LabelReqImpl request = LabelReqImpl.getInstance();
-    private Timer timer = new Timer();
 
-    @ViewById(R.id.notice)
-    TextView notice;
     @ViewById(R.id.mSwipeLayout)
     SwipeRefreshLayout mSwipeLayout;
     @ViewById(R.id.recyclerView)
@@ -70,17 +73,19 @@ public class HomeF extends BaseF implements SwipeRefreshLayout.OnRefreshListener
     public RecentAdapter adapter;
     private List<LabelM> list;
     private List<LabelM> newList = new ArrayList<>(); //存储每次从网上获取的数据
-    public LinearLayoutManager llManager = new LinearLayoutManager(getActivity());
-    public int lastVisibleItem = 0;
 
     public List<LabelM> nativeDatas = new ArrayList<>();
 
     public ACache cache;
+    MainActivity activity;
 
 
     @AfterViews
     public void initView() {
-        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#00bcd4")));
+        activity = (MainActivity) getActivity();
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF99CC")));
+        fab.setSize(FloatingActionButton.SIZE_MINI);
+
         list = new ArrayList<>();
         cache = ACache.get(getActivity(), MyConstants.USER_INFO);
 
@@ -89,64 +94,70 @@ public class HomeF extends BaseF implements SwipeRefreshLayout.OnRefreshListener
         mSwipeLayout.setDistanceToTriggerSync(300);  // 设置手指在屏幕下拉多少距离会触发下拉刷新
 
         adapter = new RecentAdapter(getActivity(), list);
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL_LIST));
 
-        this.adapter.setOnItemClickListener(new OnItemClickListener() {
+        adapter.setLabelCallBack(new RecentAdapter.LabelCallBack() {
             @Override
-            public void onItemClick(View view, int position) {
-                if (list.size() > 0) {
-                    saveRecentScan(position);
-                    EventBus.getDefault().postSticky(list.get(position));
-                    startActivity(new Intent(getActivity(), LabelDetailA_.class));
-                }
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getActivity(), LabelDetailA_.class);
+                intent.putExtra("label", list.get(position));
+                startActivity(intent);
 
+                saveRecentScan(position);
             }
         });
-        mRecyclerView.setLayoutManager(llManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1) == adapter.getItemCount()) {
+//                    loadMore();
+//                    adapter.notifyDataSetChanged();
+//
+//                }
+//            }
+//
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                super.onScrolled(recyclerView, dx, dy);
+//                if (dy > 15 && fab.isShown()) {
+//                    fab.setVisibility(View.GONE);
+//                    if (btnShow == null) {
+//                        btnShow = AnimationUtils.loadAnimation(getActivity(), R.anim.float_btn_show);
+//                    }
+//                    fab.startAnimation(btnShow);
+//
+//                } else if (dy < -15 && !fab.isShown()) {
+//                    fab.setVisibility(View.VISIBLE);
+//                    if (btnHide == null) {
+//                        btnHide = AnimationUtils.loadAnimation(getActivity(), R.anim.float_btn_hide);
+//                    }
+//                    fab.startAnimation(btnHide);
+//
+//                }
+//                lastVisibleItem = llManager.findLastVisibleItemPosition();
+//
+//            }
+//        });
+
+        mRecyclerView.addOnScrollListener(new EndLessOnScrollListener(mRecyclerView) {
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if (newState == RecyclerView.SCROLL_STATE_IDLE && (lastVisibleItem + 1) == adapter.getItemCount()) {
-                    loadMore();
-                    adapter.notifyDataSetChanged();
-
-                }
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                if (dy > 15 && fab.isShown()) {
-                    fab.setVisibility(View.GONE);
-                    if (btnShow == null) {
-                        btnShow = AnimationUtils.loadAnimation(getActivity(), R.anim.float_btn_show);
-                    }
-                    fab.startAnimation(btnShow);
-
-                } else if (dy < -15 && !fab.isShown()) {
-                    fab.setVisibility(View.VISIBLE);
-                    if (btnHide == null) {
-                        btnHide = AnimationUtils.loadAnimation(getActivity(), R.anim.float_btn_hide);
-                    }
-                    fab.startAnimation(btnHide);
-
-                }
-                lastVisibleItem = llManager.findLastVisibleItemPosition();
-
+            public void onLoadMore(int currentPage) {
+                onReload(currentPage);
             }
         });
+
 
 
         mRecyclerView.setAdapter(adapter);
 
         loadNativeData();
-        if (list.size()==0){
-            notice.setVisibility(View.GONE);
-        }else{
-            notice.setVisibility(View.VISIBLE);
-        }
+
+
+
     }
 
 
@@ -164,6 +175,45 @@ public class HomeF extends BaseF implements SwipeRefreshLayout.OnRefreshListener
                 cache.put(MyConstants.LABEL_RECENT_SCAN, json);
             }
         }
+
+    }
+
+    @Background
+    public void onReload(int curPage) {
+
+        if (curPage == 0) {
+            list.clear();
+        }
+
+        request.getLabels(MyConstants.BASE_URL, curPage, 0, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String back = response.body().string();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        newList = new Gson().fromJson(back, new TypeToken<ArrayList<LabelM>>() {
+                        }.getType());
+                        if (newList.size() == 0) {
+                            adapter.changeLoadStatus(1);
+                        } else {
+                            list.addAll(newList);
+                            adapter.notifyDataSetChanged();
+
+                        }
+                        mSwipeLayout.setRefreshing(false);
+
+                    }
+                });
+                cache.put(MyConstants.LABEL_NATIVE_CACHE, back);
+
+            }
+        });
 
     }
 
@@ -186,133 +236,12 @@ public class HomeF extends BaseF implements SwipeRefreshLayout.OnRefreshListener
 
     }
 
-    @Background
-    public void fetchData() {
-        request.get(MyConstants.BASE_URL_FOR_FIND, new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                try {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            failRequest();
-                        }
-                    });
-                } catch (Exception a) {
-                    a.printStackTrace();
-                }
-            }
 
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-
-                String jsonArray = null;
-                try {
-                    jsonArray = response.body().string();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                list = new Gson().fromJson(jsonArray, new TypeToken<ArrayList<LabelM>>() {
-                }.getType()); //
-
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.refreshItem(list);
-                        mSwipeLayout.setRefreshing(false);
-                        response.close();
-                    }
-                });
-
-                cache.put(MyConstants.LABEL_NATIVE_CACHE, jsonArray);
-
-            }
-        });
-    }
-
-    @Background
-    public void loadMore() {
-        if (list.size() != 0) {
-            int count = list.size() - 1;
-            String url = MyConstants.BASE_URL_FOR_LOAD_MORE + list.get(count).getPubTime();
-            request.get(url, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    try {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                failRequest();
-                            }
-                        });
-                    } catch (Exception a) {
-                        a.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onResponse(Call call, final Response response) throws IOException {
-                    String jsonArray = null;
-                    try {
-                        jsonArray = response.body().string();
-                        if (jsonArray!=null){
-                            newList = new Gson().fromJson(jsonArray, new TypeToken<ArrayList<LabelM>>() {}.getType());
-                            list.addAll(newList);
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.addLoadItem(newList);
-                            response.close();
-                        }
-                    });
-
-                }
-            });
-        }
-    }
-
-
-    @UiThread
-    public void failRequest() {
-        mSwipeLayout.setRefreshing(false);
-        Toast.makeText(getActivity(), "当前网络状况不佳,请稍后重试", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
 
     public void onRefresh() {
-        fetchData();
-    }
-
-//    @UiThread
-//    public void refreshtimeout(){
-//        timer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mSwipeLayout.setRefreshing(false);
-//                        Toast.makeText(mContext, "当前网络状况不佳,请稍后重试", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//            }
-//        },5000);
-//    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        timer.cancel();
+        onReload(0);
     }
 
 
@@ -323,7 +252,12 @@ public class HomeF extends BaseF implements SwipeRefreshLayout.OnRefreshListener
 
     @Click(R.id.fab)
     void fab() {
-        startActivity(new Intent(getActivity(), AddLabelA_.class));
+        startActivity(new Intent(getActivity(), SelectTypeA_.class));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        onReload(0);
+    }
 }

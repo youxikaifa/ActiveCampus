@@ -36,7 +36,7 @@ public class PagerDialog extends Dialog implements View.OnClickListener{
     private TextView curPage;
     private TextView totalPage;
     private RelativeLayout rlDetail;
-    private List<View> views = new ArrayList<>();;
+    private List<View> views = new ArrayList<>();
     private ImagePagerAdapter adapter;
     private int position;
 

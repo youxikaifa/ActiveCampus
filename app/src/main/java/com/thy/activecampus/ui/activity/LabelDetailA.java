@@ -1,26 +1,54 @@
 package com.thy.activecampus.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.Animatable;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.PagerAdapter;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.controller.ControllerListener;
+import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.image.ImageInfo;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.thy.activecampus.R;
+import com.thy.activecampus.adapter.ACommentAdapter;
+import com.thy.activecampus.adapter.ImagePagerAdapter;
 import com.thy.activecampus.base.BaseA;
 import com.thy.activecampus.common.ACache;
 import com.thy.activecampus.common.MyConstants;
+import com.thy.activecampus.model.AutoComment;
 import com.thy.activecampus.model.LabelM;
 import com.thy.activecampus.model.Room;
 import com.thy.activecampus.model.User;
 import com.thy.activecampus.net.impl.LabelReqImpl;
+import com.thy.activecampus.view.MyListView;
+import com.thy.activecampus.widget.PagerDialog;
 import com.thy.activecampus.widget.SlideView;
 import com.umeng.analytics.MobclickAgent;
 
@@ -34,7 +62,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -44,317 +74,80 @@ import okhttp3.Response;
  * Created by Jin on 7/29.
  */
 @EActivity(R.layout.activity_label_detail)
-public class LabelDetailA extends BaseA {
+public class LabelDetailA extends BaseA implements AdapterView.OnItemClickListener {
 
     private LabelReqImpl request = LabelReqImpl.getInstance();
 
-    @ViewById(R.id.likeNum)
-    TextView likeNum;
-
-    @ViewById(R.id.followNum)
-    TextView followNum;
-    @ViewById(R.id.tv_join)
-    TextView join;
-    @ViewById(R.id.view_user)
-    SimpleDraweeView viewUser;
+    @ViewById(R.id.fl_content)
+    FrameLayout flContent;
+    @ViewById(R.id.view_head)
+    SimpleDraweeView head;
     @ViewById(R.id.tv_name)
     TextView tvName;
-    @ViewById(R.id.tv_pubtime)
+    @ViewById(R.id.tv_time)
     TextView tvTime;
+    @ViewById(R.id.iv_sex)
+    ImageView ivSex;
+    @ViewById(R.id.tv_motto)
+    TextView tvMotto;
     @ViewById(R.id.tv_content)
     TextView tvContent;
+    @ViewById(R.id.tv_school)
+    TextView school;
+    @ViewById(R.id.tv_comments)
+    TextView tvComments;
+    @ViewById(R.id.fab)
+    FloatingActionButton fab;
+    @ViewById(R.id.view_pic)
+    SimpleDraweeView viewPic;
+    @ViewById(R.id.picNum)
+    TextView picNum;
     @ViewById(R.id.lv_comment)
-    ListView lvComment;
-    @ViewById(R.id.tv_notice)
-    TextView tvNotice;
-    @ViewById(R.id.tv_join)
-    TextView tvJoin;
-    @ViewById(R.id.iv_follow)
-    ImageView follow;
-    @ViewById(R.id.iv_like)
-    ImageView like;
-    @ViewById(R.id.slideview)
-    SlideView slideView;
+    MyListView lvComment;
 
     LabelM labelM;
     ACache cache;
     User user;
-    boolean isLike;
-    boolean isFollow;
-    int curLike = 0;
-    int curFollow = 0;
 
-    List<Room> localRooms = new ArrayList<>();
+    List<AutoComment> comments = new ArrayList<>();
+    List<AutoComment> allComments;
+    List<AutoComment> allReps = new ArrayList<>();
+    Map<Integer,List<AutoComment>> map = new HashMap<>();
+
+    PopupWindow commentWindow;
+    PopupWindow repWindow;
+
+    ACommentAdapter adapter;
 
 
     @AfterViews
     public void initViews() {
+        fab.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#FF99CC")));
+        getAgrs();
         cache = ACache.get(this, MyConstants.USER_INFO);
-
         user = (User) cache.getAsObject(MyConstants.USER_MESSAGE);
-        slideView.setData(labelM.getPicUrls());
+
+        adapter = new ACommentAdapter(this,comments,map);
+        adapter.setRCallback(new ACommentAdapter.RepCallBack() {
+            @Override
+            public void rCallBack(AutoComment comment) {
+                View repView = LayoutInflater.from(LabelDetailA.this).inflate(R.layout.window_auto_rep,null);
+                showPopWindow3(repView, comment);
+            }
+        });
+        lvComment.setAdapter(adapter);
+        lvComment.setOnItemClickListener(this);
         init();
 
     }
 
-    private void init() {
-        curFollow = labelM.getFollowers().size();
-        curLike = labelM.getLikes().size();
-        if (labelM.getHead().substring(0,4).equals("http")){
-            viewUser.setImageURI(labelM.getHead());
-        }else{
-            viewUser.setImageURI(MyConstants.BASE_URL_ANOTHER_PORT+labelM.getHead());
-        }
-
-        if (labelM.getFollowers()!=null){
-            if (labelM.getFollowers().contains(user.get_id())) {
-                follow.setImageResource(R.drawable.follow_active);
-                followNum.setTextColor(Color.parseColor("#11cd6e"));
-                isFollow = true;
-            } else {
-                follow.setImageResource(R.drawable.follow);
-                followNum.setTextColor(Color.parseColor("#a9b7b7"));
-                isFollow = false;
-            }
-            followNum.setText(labelM.getFollowers().size() + "");
-        }
-
-        if (labelM.getLikes()!=null){
-            if (labelM.getLikes().contains(user.get_id())) {
-                like.setImageResource(R.drawable.like_active);
-                likeNum.setTextColor(Color.parseColor("#11cd6e"));
-                isLike = true;
-            } else {
-                like.setImageResource(R.drawable.like);
-                likeNum.setTextColor(Color.parseColor("#a9b7b7"));
-                isLike = false;
-            }
-            likeNum.setText(labelM.getLikes().size() + "");
-        }
-
-
-
-
-
-        tvName.setText(labelM.getName());
-        tvTime.setText(logicTime(labelM.getPubTime()));
-        tvContent.setText(labelM.getContent());
-
-        if (labelM.getUserId().equals(user.get_id())){
-            tvNotice.setVisibility(View.GONE);
-        }else{
-            if (user.getFollowing()!=null && user.getFollowing().contains(labelM.getUserId())){
-                tvNotice.setText("已关注");
-            }else {
-                tvNotice.setText("+关注");
-            }
-        }
-
+    private void getAgrs() {
+        Intent intent = getIntent();
+        labelM = (LabelM) intent.getSerializableExtra("label");
     }
 
-    @Click(R.id.back)
-    void back() {
-        this.finish();
-    }
-
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-    @Subscribe(sticky = true)
-    public void onEventMainThread(LabelM model) {
-        this.labelM = model;
-
-    }
-
-
-    @Click(R.id.rl_follow)
-    @Background
-    void collect() {
-
-        if (user.getCollections().contains(labelM.get_id())) {
-            request.unCollect(MyConstants.BASE_URL,user.get_id(),labelM.get_id(), new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.v(">>>>>>>>>>>>>", e.getLocalizedMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String json = response.body().string();
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            follow.setImageResource(R.drawable.follow);
-                            followNum.setTextColor(Color.parseColor("#a9b7b7"));
-                            followNum.setText(labelM.getFollowers().size()-1+"");
-                            labelM.getFollowers().remove(user.get_id());
-
-                            user.getCollections().remove(labelM.get_id());
-                            cache.put(MyConstants.USER_MESSAGE,user);
-                        }
-                    });
-
-                }
-            });
-        } else {
-            request.collect(MyConstants.BASE_URL, user.get_id(),labelM.get_id(), new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.v(">>>>>>>>>>>>>", e.getLocalizedMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-
-                    final String json = response.body().string();
-
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            follow.setImageResource(R.drawable.follow_active);
-                            followNum.setTextColor(Color.parseColor("#11cd6e"));
-                            followNum.setText(labelM.getFollowers().size()+1+"");
-
-                            labelM.getFollowers().add(user.get_id());
-
-                            user.getCollections().add(labelM.get_id());
-                            cache.put(MyConstants.USER_MESSAGE,user);
-                        }
-                    });
-
-
-                }
-            });
-        }
-
-    }
-
-    @Click(R.id.rl_like)
-    @Background
-    void like() {
-        final String user_id = user.get_id();
-        String label_id = labelM.get_id();
-
-        if (labelM.getLikes().contains(user.get_id())) {
-            request.unLike(MyConstants.BASE_URL , user_id, label_id, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.v(">>>>>>>>>>>>>", e.getLocalizedMessage());
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String json = response.body().string();
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            like.setImageResource(R.drawable.like);
-                            likeNum.setTextColor(Color.parseColor("#a9b7b7"));
-                            likeNum.setText(labelM.getLikes().size()-1+"");
-                            labelM.getLikes().remove(user_id);
-                        }
-                    });
-
-                }
-            });
-        } else {
-            request.like(MyConstants.BASE_URL , user_id, label_id, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-
-                    final String json = response.body().string();
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            like.setImageResource(R.drawable.like_active);
-                            likeNum.setTextColor(Color.parseColor("#11cd6e"));
-                            likeNum.setText(labelM.getLikes().size()+1+"");
-                            labelM.getLikes().add(user_id);
-                        }
-                    });
-
-
-                }
-            });
-        }
-    }
-
-    @Click(R.id.rl_comment)
-    void comment() {
-        Intent intent = new Intent(this, CommentA_.class);
-        intent.putExtra("LabelID", labelM.get_id());
-        intent.putExtra("Title", labelM.getTitle());
-        startActivity(intent);
-    }
-
-    @Click(R.id.tv_notice)
-    @Background
-    void notice() {
-        String my_id = user.get_id();
-        final String other_id = labelM.getUserId();
-        if (user.getFollowing()!=null&&user.getFollowing().contains(other_id)){
-            request.unnotice(MyConstants.BASE_URL, my_id, other_id, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tvNotice.setText("+关注");
-                        }
-                    });
-                    String json = response.body().string();
-                    user = new Gson().fromJson(json,User.class);
-                    cache.put(MyConstants.USER_MESSAGE,user);
-                }
-            });
-        }else{
-            request.notice(MyConstants.BASE_URL, my_id, other_id, new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-
-                }
-
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            tvNotice.setText("已关注");
-                        }
-                    });
-                    String json = response.body().string();
-                    user = new Gson().fromJson(json,User.class);
-                    cache.put(MyConstants.USER_MESSAGE,user);
-                }
-            });
-        }
-    }
-
-    @Click(R.id.tv_join)
-    void join() {
+    @Click(R.id.iv_chat)
+    void chat(){
         Intent intent = new Intent(this, ChatRoomA_.class);
         intent.putExtra("label_id",labelM.get_id());
         intent.putExtra("label_thumb",labelM.getHead());
@@ -381,23 +174,337 @@ public class LabelDetailA extends BaseA {
         });
     }
 
+    private void init() {
 
-    @Click(R.id.view_user)
+        head.setImageURI(MyConstants.BASE_URL_ANOTHER_PORT+labelM.getHead());
+        tvName.setText(labelM.getName());
+        tvTime.setText(logicTime(labelM.getPubTime()));
+        tvContent.setText(labelM.getContent());
+
+
+        if (labelM.getSchool()!=null){
+            school.setText(labelM.getSchool());
+        }
+
+        if (labelM.getMotto()!=null){
+            tvMotto.setText(labelM.getMotto());
+        }
+
+
+        if (labelM.getPicUrls().size()==0){
+            flContent.setVisibility(View.GONE);
+        }else{
+            ControllerListener controllerListener = getListener(viewPic);
+            DraweeController controller = Fresco.newDraweeControllerBuilder()
+                    .setControllerListener(controllerListener)
+                    .setUri(Uri.parse(MyConstants.BASE_URL+labelM.getPicUrls().get(0)))
+                    .build();
+            viewPic.setController(controller);
+            flContent.setVisibility(View.VISIBLE);
+
+            tvComments.setText(labelM.getPicUrls().size()+" 回复");
+            picNum.setText(labelM.getPicUrls().size()+"");
+        }
+
+        if (labelM.getSex()==0){
+            ivSex.setImageResource(R.drawable.ic_male);
+        }else{
+            ivSex.setImageResource(R.drawable.ic_famale);
+        }
+
+    }
+
+    @Click(R.id.iv_back)
+    void back() {
+        this.finish();
+    }
+
+
+    @Click(R.id.view_head)
     void user() {
         Intent intent = new Intent(new Intent(this, UserHomePageA_.class));
         intent.putExtra("user_id",labelM.getUserId());
         startActivity(intent);
     }
 
-    public void onResume() {
-        super.onResume();
-        MobclickAgent.onResume(this);
+    @Click(R.id.fl_content)
+    void pic(){
+        PagerDialog dialog = new PagerDialog(this, labelM.getPicUrls(), 0);
+        dialog.getWindow().setWindowAnimations(R.style.dialog_anim);
+        dialog.show();
     }
 
-    public void onPause() {
-        super.onPause();
-        MobclickAgent.onPause(this);
+    @Click(R.id.fab)
+    void fab(){
+        View view = LayoutInflater.from(this).inflate(R.layout.window_commit_comment,null);
+
+        final EditText etContent = (EditText) view.findViewById(R.id.et_content);
+        final TextView tvSend = (TextView) view.findViewById(R.id.tv_send);
+        RelativeLayout space = (RelativeLayout) view.findViewById(R.id.space);
+        ImageView img = (ImageView) view.findViewById(R.id.select_photo);
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        space.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentWindow.dismiss();
+            }
+        });
+        tvSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AutoComment comment = new AutoComment();
+                AutoComment.FromUserBean bean = new AutoComment.FromUserBean();
+                comment.setAutoid(labelM.get_id());
+                comment.setType(0);
+                comment.setContent(etContent.getText().toString());
+                bean.setThumb(user.getThumb());
+                bean.set_id(user.get_id());
+                bean.setName(user.getName());
+                comment.setFrom_user(bean);
+                request.commitAutoComment(MyConstants.BASE_URL, comment, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String back = response.body().string();
+                        refreshData(back);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyDataSetChanged();
+                                commentWindow.dismiss();
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+        commentWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,false);
+        commentWindow.setFocusable(true);
+        commentWindow.setBackgroundDrawable(new BitmapDrawable());
+        commentWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        commentWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        commentWindow.showAtLocation(view, Gravity.BOTTOM,0,0);
+
+        etContent.requestFocus();
+        etContent.setFocusable(true);
+
+        showSoftInut();
+
     }
+
+    public ControllerListener getListener(final SimpleDraweeView view){
+        final ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+        ControllerListener controllerListener = new BaseControllerListener<ImageInfo>() {
+            @Override
+            public void onFinalImageSet(String id, @Nullable ImageInfo imageInfo, @Nullable Animatable anim) {
+                if (imageInfo == null) {
+                    return;
+                }
+                int height = imageInfo.getHeight();
+                int width = imageInfo.getWidth();
+                layoutParams.width = 1080;
+                layoutParams.height = (int) ((float) (1080 * height) / (float) width);
+                view.setLayoutParams(layoutParams);
+            }
+
+            @Override
+            public void onIntermediateImageSet(String id, @Nullable ImageInfo imageInfo) {
+                Log.d("TAG", "Intermediate image received");
+            }
+
+            @Override
+            public void onFailure(String id, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        };
+
+        return  controllerListener;
+    }
+
+    public void showPopWindow3(View repView, final AutoComment comment){
+        final EditText etContent = (EditText) repView.findViewById(R.id.et_content);
+        TextView tvSend = (TextView) repView.findViewById(R.id.tv_send);
+        RelativeLayout space = (RelativeLayout) repView.findViewById(R.id.space);
+        space.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                repWindow.dismiss();
+            }
+        });
+        etContent.setHint(user.getName()+" 回复: "+comment.getFrom_user().getName());
+
+        tvSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AutoComment autoComment = new AutoComment();
+                AutoComment.FromUserBean fromBean = new AutoComment.FromUserBean();
+                AutoComment.TargetUserBean targetBean = new AutoComment.TargetUserBean();
+                autoComment.setAutoid(labelM.get_id());
+                autoComment.setType(2);
+                autoComment.setContent(etContent.getText().toString());
+                autoComment.setRepid(comment.getRepid());
+                fromBean.setName(user.getName());
+                fromBean.set_id(user.get_id());
+                fromBean.setThumb(user.getThumb());
+                targetBean.set_id(comment.getFrom_user().get_id());
+                targetBean.setName(comment.getFrom_user().getName());
+                targetBean.setThumb(comment.getFrom_user().getThumb());
+                autoComment.setFrom_user(fromBean);
+                autoComment.setTarget_user(targetBean);
+
+                request.commitAutoComment(MyConstants.BASE_URL, autoComment, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String back = response.body().string();
+                        refreshData(back);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                repWindow.dismiss();
+                            }
+                        });
+                    }
+                });
+
+            }
+        });
+        repWindow = new PopupWindow(repView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,false);
+        repWindow.setFocusable(true);
+        repWindow.setBackgroundDrawable(new BitmapDrawable());
+        repWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        repWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        repWindow.showAtLocation(repView, Gravity.BOTTOM,0,0);
+
+        etContent.requestFocus();
+        etContent.setFocusable(true);
+
+        showSoftInut();
+    }
+
+    private void showSoftInut() {
+        InputMethodManager imm = (InputMethodManager) getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        //这里给它设置了弹出的时间，
+        imm.toggleSoftInput(1000, InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    public void refreshData(String back){
+        comments.clear();
+        allReps.clear();
+        map.clear();
+        allComments = new Gson().fromJson(back,new TypeToken<ArrayList<AutoComment>>(){}.getType());
+        for (int i = 0; i < allComments.size(); i++) {
+            if (allComments.get(i).getType()==0){
+                comments.add(allComments.get(i));
+            }else{
+                allReps.add(allComments.get(i));
+            }
+        }
+
+
+        for (int i = 0; i < comments.size(); i++) {
+            if (map.get(i)==null){
+                map.put(i,new ArrayList<AutoComment>());
+            }
+            for (int j = 0; j < allReps.size(); j++) {
+                if (comments.get(i).get_id().equals(allReps.get(j).getRepid())){
+                    map.get(i).add(allReps.get(j));
+                }
+            }
+        }
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                tvComments.setText(allComments.size()+" 回复");
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    public void showPopWindow2(View repView, final int position) {
+
+        String name = comments.get(position).getFrom_user().getName();
+
+        final EditText etContent = (EditText) repView.findViewById(R.id.et_content);
+        TextView tvSend = (TextView) repView.findViewById(R.id.tv_send);
+        RelativeLayout space = (RelativeLayout) repView.findViewById(R.id.space);
+        space.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                repWindow.dismiss();
+            }
+        });
+        etContent.setHint("回复: "+name);
+
+        tvSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AutoComment autoComment = new AutoComment();
+                AutoComment.FromUserBean bean = new AutoComment.FromUserBean();
+                autoComment.setAutoid(labelM.get_id());
+                autoComment.setType(1);
+                autoComment.setContent(etContent.getText().toString());
+                autoComment.setRepid(comments.get(position).get_id());
+                bean.setName(user.getName());
+                bean.set_id(user.get_id());
+                bean.setThumb(user.getThumb());
+                autoComment.setFrom_user(bean);
+                request.commitAutoComment(MyConstants.BASE_URL, autoComment, new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        String back = response.body().string();
+                        refreshData(back);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                repWindow.dismiss();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        repWindow = new PopupWindow(repView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,false);
+        repWindow.setFocusable(true);
+        repWindow.setBackgroundDrawable(new BitmapDrawable());
+        repWindow.setSoftInputMode(PopupWindow.INPUT_METHOD_NEEDED);
+        repWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        repWindow.showAtLocation(repView, Gravity.BOTTOM,0,0);
+
+        etContent.requestFocus();
+        etContent.setFocusable(true);
+
+        showSoftInut();
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        View repView = LayoutInflater.from(this).inflate(R.layout.window_auto_rep,null);
+        showPopWindow2(repView, position);
+    }
+
+
 
 
 }

@@ -3,6 +3,7 @@ package com.thy.activecampus.net.okReq;
 import com.thy.activecampus.model.AutoComment;
 import com.thy.activecampus.model.AutoDyne;
 import com.thy.activecampus.model.Comment;
+import com.thy.activecampus.model.FeelModel;
 import com.thy.activecampus.model.LabelM;
 import com.thy.activecampus.model.Losing;
 import com.thy.activecampus.model.User;
@@ -70,14 +71,18 @@ public interface LabelReq {
     void findlost(String url, Losing losing,Callback callback);
 
     void getAutoDyne(String url,int curPage,int type,Callback callback);
+    void getFeels(String url,int curPage,String school,Callback callback);
+    void getLabels(String url,int curPage,int type ,Callback callback);
 
     void getAutoComments(String url,String auto_id,Callback callback);
 
     void commitAutoComment(String url, AutoComment comment, Callback callback);
 
     void clickAutoLike(String url,String auto_id,String user_id,Callback callback);
+    void clickFeelLike(String url,String feel_id,String thumb,Callback callback);
 
     void joinScans(String url,String auto_id,Callback callback);
 
     void pubAutoDyne(String url, AutoDyne autoDyne,Callback callback);
+    void pubFeeling(String url, FeelModel model,Callback callback);
 }

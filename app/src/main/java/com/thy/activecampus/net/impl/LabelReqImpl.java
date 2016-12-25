@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.thy.activecampus.model.AutoComment;
 import com.thy.activecampus.model.AutoDyne;
 import com.thy.activecampus.model.Comment;
+import com.thy.activecampus.model.FeelModel;
 import com.thy.activecampus.model.LabelM;
 import com.thy.activecampus.model.Losing;
 import com.thy.activecampus.model.User;
@@ -91,9 +92,10 @@ public class LabelReqImpl implements LabelReq {
         builder.addFormDataPart("userId", model.getUserId());
         builder.addFormDataPart("name", model.getName());
         builder.addFormDataPart("sex", String.valueOf(model.getSex()));
-        builder.addFormDataPart("title", model.getTitle());
         builder.addFormDataPart("content", model.getContent());
         builder.addFormDataPart("head", model.getHead());
+        builder.addFormDataPart("school", model.getSchool());
+        builder.addFormDataPart("motto", model.getMotto());
         builder.addFormDataPart("tags", String.valueOf(model.getTags()));
         MultipartBody requestBody = builder.build();
         //构建请求
@@ -123,6 +125,8 @@ public class LabelReqImpl implements LabelReq {
         builder.addFormDataPart("sex", String.valueOf(user.getSex()));
         builder.addFormDataPart("userId", user.get_id());
         builder.addFormDataPart("name", user.getName());
+        builder.addFormDataPart("school", user.getSchool());
+        builder.addFormDataPart("motto", user.getMotto());
         MultipartBody requestBody = builder.build();
         //构建请求
         Request request = new Request.Builder()
@@ -324,6 +328,12 @@ public class LabelReqImpl implements LabelReq {
             builder.addFormDataPart("reduce", user.getReduce());
         }else{
             builder.addFormDataPart("reduce", "");
+        }
+
+        if (user.getMotto()!=null){
+            builder.addFormDataPart("motto", user.getMotto());
+        }else{
+            builder.addFormDataPart("motto", "");
         }
 
         if (user.getSchool()!=null){
@@ -530,6 +540,26 @@ public class LabelReqImpl implements LabelReq {
     }
 
     @Override
+    public void getFeels(String url, int curPage, String school, Callback callback) {
+        String realUrl = url+"/v1/getFeels?page="+curPage+"&school="+school;
+        client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(realUrl)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    @Override
+    public void getLabels(String url, int curPage, int type, Callback callback) {
+        String realUrl = url+"/v1/getLabels?page="+curPage+"&type="+type;
+        client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(realUrl)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    @Override
     public void getAutoComments(String url, String auto_id, Callback callback) {
         String realUrl = url+"/v1/getAutoComments?auto_id="+auto_id;
         client = new OkHttpClient();
@@ -554,6 +584,16 @@ public class LabelReqImpl implements LabelReq {
     @Override
     public void clickAutoLike(String url, String auto_id,String user_id, Callback callback) {
         String realUrl = url+"/v1/clickAutoLike?auto_id="+auto_id+"&user_id="+user_id;
+        client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(realUrl)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    @Override
+    public void clickFeelLike(String url, String feel_id, String thumb, Callback callback) {
+        String realUrl = url+"/v1/clickFeelLike?feel_id="+feel_id+"&thumb="+thumb;
         client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(realUrl)
@@ -595,6 +635,43 @@ public class LabelReqImpl implements LabelReq {
         builder.addFormDataPart("name", autoDyne.getName());
         builder.addFormDataPart("userId",autoDyne.getUserId());
         builder.addFormDataPart("head",autoDyne.getHead());
+        builder.addFormDataPart("motto",autoDyne.getMotto());
+        builder.addFormDataPart("school",autoDyne.getSchool());
+        MultipartBody requestBody = builder.build();
+        //构建请求
+        Request request = new Request.Builder()
+                .url(realUrl)//地址
+                .post(requestBody)//添加请求体
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    @Override
+    public void pubFeeling(String url, FeelModel model, Callback callback) {
+        String realUrl = url + "/v1/pubFeeling";
+        CompressImgUtil util = new CompressImgUtil();
+
+        client = new OkHttpClient();
+
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+
+        for (int i = 0; i < model.getPics().size(); i++) {
+            String smallFilePath = util.getSmallFilePath(model.getPics().get(i));
+
+            File f = new File(smallFilePath);
+            if (f != null) {
+                builder.addFormDataPart("images", f.getName(), RequestBody.create(MEDIA_TYPE_PNG, f));
+            }
+        }
+//        //添加其它信息
+        builder.addFormDataPart("content", model.getContent());
+        builder.addFormDataPart("type",model.getType()+"");
+        builder.addFormDataPart("name", model.getName());
+        builder.addFormDataPart("userId",model.getUserId());
+        builder.addFormDataPart("head",model.getHead());
+        builder.addFormDataPart("sex",model.getSex()+"");
+        builder.addFormDataPart("motto",model.getMotto());
+        builder.addFormDataPart("school",model.getSchool());
         MultipartBody requestBody = builder.build();
         //构建请求
         Request request = new Request.Builder()

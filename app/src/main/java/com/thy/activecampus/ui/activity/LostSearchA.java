@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.thy.activecampus.R;
 import com.thy.activecampus.adapter.LosingAdapter;
+import com.thy.activecampus.adapter.LosingSearchAdapter;
 import com.thy.activecampus.common.MyConstants;
 import com.thy.activecampus.model.Losing;
 import com.thy.activecampus.net.impl.LabelReqImpl;
@@ -51,14 +52,14 @@ public class LostSearchA extends AppCompatActivity implements AdapterView.OnItem
     @ViewById(R.id.progress_bar)
     ProgressBar progressBar;
 
-    LosingAdapter adapter;
+    LosingSearchAdapter adapter;
 
     List<Losing> list = new ArrayList<>();
     List<Losing> tempList ;
 
     @AfterViews
     public void initViews(){
-        adapter = new LosingAdapter(this,list);
+        adapter = new LosingSearchAdapter(this,list);
         lvLost.setAdapter(adapter);
         lvLost.setOnItemClickListener(this);
 

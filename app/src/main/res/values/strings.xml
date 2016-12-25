@@ -79,4 +79,5 @@
     <string name="skill">技能展示</string>
     <string name="habit">喜好</string>
     <string name="lostthing">输入搜索物品</string>
+    <string name="motto">座右铭</string>
 </resources>
